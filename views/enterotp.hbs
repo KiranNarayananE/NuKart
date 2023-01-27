@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slide Navbar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/userlogin.css">
+</head>
+<body>
+    <div class="main">    
+    <input type="checkbox" id="chk" aria-hidden="true">
+      <div class="signup">
+        <form action="/otpverify"  onsubmit="return validation()"method="post">
+        <p class="danger" id="valid"  style="color: red;"></p>
+          <label for="chk" aria-hidden="true">Verify OTP</label>
+         
+          
+          <input type="" name="otp" placeholder="Enter OTP" style="margin: 0px auto;" id="otpinp">
+          <p class="danger" id="valid"  style="display: none; margin: 3px 0px 0px 65px ;color: red;"></p>
+          <button id="sign-button" style="margin: 30px auto;">Submit</button>
+          <a href="" id="resendotp">Resend OTP</a>
+        </form>
+      </div>
+  </div>
+   <script>
+    if({{msg_error}}){
+     document.getElementById('valid').innerHTML="COuldnt Verify OTP"
+    document.getElementById('valid').style.display="block"
+    setTimeout(()=>{
+			document.getElementById("valid").style.display="none"
+		   },2000)  
+    }
+    if({{msg_wrong}}){
+     document.getElementById('valid').innerHTML="Incorrect OTP"
+    document.getElementById('valid').style.display="block"
+    setTimeout(()=>{
+			document.getElementById("valid").style.display="none"
+		   },2000)  
+    }
+	
+  function validation(){
+    const no = document.getElementById("otpinp").value;
+    if (no.length==0) {
+      document.getElementById('valid').innerHTML="Enter OTP"
+    document.getElementById('valid').style.display="block"
+    setTimeout(()=>{
+			document.getElementById("valid").style.display="none"
+		   },2000)
+       return false
+    }
+        else if (no.length!=6) {
+      document.getElementById('valid').innerHTML="Enter valid OTP"
+    document.getElementById('valid').style.display="block"
+    setTimeout(()=>{
+			document.getElementById("valid").style.display="none"
+		   },2000)
+    return false
+	}
+  else{
+    return true
+  }
+  }
+  if({{OTP_error}}){
+   document.getElementById('valid').innerHTML="Incorrect OTP"
+    document.getElementById('valid').style.display="block"
+    setTimeout(()=>{
+			document.getElementById("valid").style.display="none"
+		   },2000) 
+  }
+        
+  </script>
+</body>
+</html>
