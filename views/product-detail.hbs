@@ -81,251 +81,224 @@
   <body class="animsition">
 
     <!-- Header -->
-    <header class="header-v4">
-      <!-- Header desktop -->
-      <div class="container-menu-desktop">
-        <!-- Topbar -->
-        <div class="top-bar">
-          <div class="content-topbar flex-sb-m h-full container">
-            <div class="left-top-bar">
-              Free shipping for standard order over $100
-            </div>
+   <header>
+		<!-- Header desktop -->
+		<div class="container-menu-desktop">
+			<!-- Topbar -->
+			<div class="top-bar">
+				<div class="content-topbar flex-sb-m h-full container">
+					<div class="left-top-bar">
+						Free shipping for standard order over $100
+					</div>
 
-            <div class="right-top-bar flex-w h-full">
-              {{#if msg_login}}
-                <a href="/logout" class="flex-c-m trans-04 p-lr-25">
-                  LOGOUT
-                </a>
-              {{else}}
-                <a href="/login" class="flex-c-m trans-04 p-lr-25">
-                  LOGIN
-                </a>
-              {{/if}}
+					<div class="right-top-bar flex-w h-full">
+						{{#if msg_login}}
+						<a href="/logout" class="flex-c-m trans-04 p-lr-25">
+							LOGOUT
+						</a>
+						{{else}}
+                         <a href="/login" class="flex-c-m trans-04 p-lr-25">
+							LOGIN
+						</a>
+						{{/if}} 
+						<a href="/profile" class="flex-c-m trans-04 p-lr-25">
+							My Account
+						</a>
 
-              <a href="/profile" class="flex-c-m trans-04 p-lr-25">
-                My Account
-              </a>
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							EN
+						</a>
 
-              <a href="#" class="flex-c-m trans-04 p-lr-25">
-                EN
-              </a>
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							USD
+						</a>
+					</div>
+				</div>
+			</div>
 
-              <a href="#" class="flex-c-m trans-04 p-lr-25">
-                USD
-              </a>
-            </div>
-          </div>
-        </div>
+			<div class="wrap-menu-desktop">
+				<nav class="limiter-menu-desktop container">
+					
+					<!-- Logo desktop -->		
+					<a href="#" class="logo">
+						<img src="/images/logo-01.png" alt="IMG-LOGO">
+					</a>
 
-        <div class="wrap-menu-desktop how-shadow1">
-          <nav class="limiter-menu-desktop container">
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li class="active-menu">
+								<a href="/">Home</a>
+								
+							</li>
 
-            <!-- Logo desktop -->
-            <a href="#" class="logo">
-              <img src="/images/logo-01.png" alt="IMG-LOGO" />
-            </a>
+							<li>
+								<a href="/shop">Shop</a>
+							</li>
 
-            <!-- Menu desktop -->
-            <div class="menu-desktop">
-              <ul class="main-menu">
-                <li>
-                  <a href="/">Home</a>
+						
 
-                </li>
+							
 
-                <li>
-                  <a href="/shop">Shop</a>
-                </li>
+							<li>
+								<a href="about.html">About</a>
+							</li>
 
-                <li>
-                  <a href="about.html">About</a>
-                </li>
+							<li>
+								<a href="contact.html">Contact</a>
+							</li>
+						</ul>
+					</div>	
 
-                <li>
-                  <a href="contact.html">Contact</a>
-                </li>
-              </ul>
-            </div>
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m">
+						<div class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+							<i class="zmdi zmdi-search"></i>
+						</div>
 
-            <!-- Icon header -->
-            <div class="wrap-icon-header flex-w flex-r-m">
-              <div
-                class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search"
-              >
-                <i class="zmdi zmdi-search"></i>
-              </div>
+						<div class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"  id="cart" data-notify="2">
+							<i class="zmdi zmdi-shopping-cart"></i>
+						</div>
 
-              <div
-                class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                data-notify="2"
-              >
-                <i class="zmdi zmdi-shopping-cart"></i>
-              </div>
+						<a href="/wishList" class="dis-block icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" >
+							<i class="zmdi zmdi-favorite-outline"></i>
+						</a>
+					</div>
+				</nav>
+			</div>	
+		</div>
 
-              <a
-                href="#"
-                class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                data-notify="0"
-              >
-                <i class="zmdi zmdi-favorite-outline"></i>
-              </a>
-            </div>
-          </nav>
-        </div>
-      </div>
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->		
+			<div class="logo-mobile">
+				<a href="/"><img src="images/logo-01.png" alt="IMG-LOGO"></a>
+			</div>
 
-      <!-- Header Mobile -->
-      <div class="wrap-header-mobile">
-        <!-- Logo moblie -->
-        <div class="logo-mobile">
-          <a href="/"><img src="/images/logo-01.png" alt="IMG-LOGO" /></a>
-        </div>
+			<!-- Icon header -->
+			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
+				<div class="icon-header-item cl0 hov-cl1 trans-04 p-r-11 js-show-modal-search">
+					<i class="zmdi zmdi-search"></i>
+				</div>
 
-        <!-- Icon header -->
-        <div class="wrap-icon-header flex-w flex-r-m m-r-15">
-          <div
-            class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search"
-          >
-            <i class="zmdi zmdi-search"></i>
-          </div>
+				<div class="icon-header-item cl0 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+					<i class="zmdi zmdi-shopping-cart"></i>
+				</div>
 
-          <div
-            class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
-            data-notify="2"
-          >
-            <i class="zmdi zmdi-shopping-cart"></i>
-          </div>
+				<a href="/wishList" class="dis-block icon-header-item cl0 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" >
+					<i class="zmdi zmdi-favorite-outline"></i>
+				</a>
+			</div>
 
-          <a
-            href="#"
-            class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-            data-notify="0"
-          >
-            <i class="zmdi zmdi-favorite-outline"></i>
-          </a>
-        </div>
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
 
-        <!-- Button show menu -->
-        <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-          </span>
-        </div>
-      </div>
 
-      <!-- Menu Mobile -->
-      <div class="menu-mobile">
-        <ul class="topbar-mobile">
-          <li>
-            <div class="left-top-bar">
-              Free shipping for standard order over $100
-            </div>
-          </li>
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+			<ul class="topbar-mobile">
+				<li>
+					<div class="left-top-bar">
+						Free shipping for standard order over $100
+					</div>
+				</li>
 
-          <li>
-            <div class="right-top-bar flex-w h-full">
-              <a href="#" class="flex-c-m p-lr-10 trans-04">
-                Help & FAQs
-              </a>
+				<li>
+					<div class="right-top-bar flex-w h-full">
+						<a href="#" class="flex-c-m p-lr-10 trans-04">
+							Help & FAQs
+						</a>
 
-              <a href="#" class="flex-c-m p-lr-10 trans-04">
-                My Account
-              </a>
+						<a href="#" class="flex-c-m p-lr-10 trans-04">
+							My Account
+						</a>
 
-              <a href="#" class="flex-c-m p-lr-10 trans-04">
-                EN
-              </a>
+						<a href="#" class="flex-c-m p-lr-10 trans-04">
+							EN
+						</a>
 
-              <a href="#" class="flex-c-m p-lr-10 trans-04">
-                USD
-              </a>
-            </div>
-          </li>
-        </ul>
+						<a href="#" class="flex-c-m p-lr-10 trans-04">
+							USD
+						</a>
+					</div>
+				</li>
+			</ul>
 
-        <ul class="main-menu-m">
-          <li>
-            <a href="/">Home</a>
-            <ul class="sub-menu-m">
-              {{! <li><a href="/">Homepage 1</a></li>
-              <li><a href="home-02.html">Homepage 2</a></li>
-              <li><a href="home-03.html">Homepage 3</a></li> }}
-            </ul>
-            <span class="arrow-main-menu-m">
-              <i class="fa fa-angle-right" aria-hidden="true"></i>
-            </span>
-          </li>
+			<ul class="main-menu-m">
+				<li>
+					<a href="/">Home</a>
+					<ul class="sub-menu-m">
+						{{!-- <li><a href="/">Homepage 1</a></li>
+						<li><a href="home-02.html">Homepage 2</a></li>
+						<li><a href="home-03.html">Homepage 3</a></li> --}}
+					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
+				</li>
 
-          <li>
-            <a href="/shop">Shop</a>
-          </li>
+				<li>
+					<a href="product.html">Shop</a>
+				</li>
 
-          <li>
-            <a
-              href="shoping-cart.html"
-              class="label1 rs1"
-              data-label1="hot"
-            >Features</a>
-          </li>
+				<li>
+					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+				</li>
 
-          <li>
-            <a href="blog.html">Blog</a>
-          </li>
+				<li>
+					<a href="blog.html">Blog</a>
+				</li>
 
-          <li>
-            <a href="about.html">About</a>
-          </li>
+				<li>
+					<a href="about.html">About</a>
+				</li>
 
-          <li>
-            <a href="contact.html">Contact</a>
-          </li>
-        </ul>
-      </div>
+				<li>
+					<a href="contact.html">Contact</a>
+				</li>
+			</ul>
+		</div>
 
-      <!-- Modal Search -->
-      <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-        <div class="container-search-header">
-          <button
-            class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search"
-          >
-            <img src="/imagescoza/icons/icon-close2.png" alt="CLOSE" />
-          </button>
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+			<div class="container-search-header">
+				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search" >
+					<img src="/imagescoza/icons/icon-close2.png" alt="CLOSE">
+				</button>
 
-          <form class="wrap-search-header flex-w p-l-15">
-            <button class="flex-c-m trans-04">
-              <i class="zmdi zmdi-search"></i>
-            </button>
-            <input
-              class="plh3"
-              type="text"
-              name="search"
-              placeholder="Search..."
-            />
-          </form>
-        </div>
-      </div>
-    </header>
+				<form class="wrap-search-header flex-w p-l-15">
+					<button class="flex-c-m trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+					<input class="plh3" type="text" name="search" placeholder="Search...">
+				</form>
+			</div>
+		</div>
+	</header>
 
-    <!-- Cart -->
-    <div class="wrap-header-cart js-panel-cart">
-      <div class="s-full js-hide-cart"></div>
+	<!-- Cart -->
+	<div class="wrap-header-cart js-panel-cart" id="modal">
+		<div class="s-full js-hide-cart"></div>
 
-      <div class="header-cart flex-col-l p-l-65 p-r-25">
-        <div class="header-cart-title flex-w flex-sb-m p-b-8">
-          <span class="mtext-103 cl2">
-            Your Cart
-          </span>
+		<div class="header-cart flex-col-l p-l-65 p-r-25">
+			<div class="header-cart-title flex-w flex-sb-m p-b-8">
+				<span class="mtext-103 cl2">
+					Your Cart
+				</span>
 
-          <div
-            class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart"
-          >
-            <i class="zmdi zmdi-close"></i>
-          </div>
-        </div>
-
-        <div class="header-cart-content flex-w js-pscroll">
-          <ul class="header-cart-wrapitem w-full">
-            {{#each cart_limit.item}}
+				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+					<i class="zmdi zmdi-close"></i>
+				</div>
+			</div>
+			
+			<div class="header-cart-content flex-w js-pscroll">
+				<ul class="header-cart-wrapitem w-full">
+					{{#each cart_limit.item}}
 					<li class="header-cart-item flex-w flex-t m-b-12">
 						<div class="header-cart-item-img">
 							<img src="/images/uploads/{{this.productId.image.[0]}}" alt="IMG">
@@ -342,70 +315,57 @@
 						</div>
 					</li>
                   {{/each }}
+					{{!-- <li class="header-cart-item flex-w flex-t m-b-12">
+						<div class="header-cart-item-img">
+							<img src="/imagescoza/item-cart-02.jpg" alt="IMG">
+						</div>
 
-            {{!-- <li class="header-cart-item flex-w flex-t m-b-12">
-              <div class="header-cart-item-img">
-                <img src="/imagescoza/item-cart-02.jpg" alt="IMG" />
-              </div>
+						<div class="header-cart-item-txt p-t-8">
+							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								Converse All Star
+							</a>
 
-              <div class="header-cart-item-txt p-t-8">
-                <a
-                  href="#"
-                  class="header-cart-item-name m-b-18 hov-cl1 trans-04"
-                >
-                  Converse All Star
-                </a>
+							<span class="header-cart-item-info">
+								1 x $39.00
+							</span>
+						</div>
+					</li>
 
-                <span class="header-cart-item-info">
-                  1 x $39.00
-                </span>
-              </div>
-            </li>
+					<li class="header-cart-item flex-w flex-t m-b-12">
+						<div class="header-cart-item-img">
+							<img src="/imagescoza/item-cart-03.jpg" alt="IMG">
+						</div>
 
-            <li class="header-cart-item flex-w flex-t m-b-12">
-              <div class="header-cart-item-img">
-                <img src="/imagescoza/item-cart-03.jpg" alt="IMG" />
-              </div>
+						<div class="header-cart-item-txt p-t-8">
+							<a href="#" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								Nixon Porter Leather
+							</a>
 
-              <div class="header-cart-item-txt p-t-8">
-                <a
-                  href="#"
-                  class="header-cart-item-name m-b-18 hov-cl1 trans-04"
-                >
-                  Nixon Porter Leather
-                </a>
+							<span class="header-cart-item-info">
+								1 x $17.00
+							</span>
+						</div>
+					</li> --}}
+				</ul>
+				
+				<div class="w-full">
+					<div class="header-cart-total w-full p-tb-40">
+						{{!-- Total: $75.00 --}}
+					</div>
 
-                <span class="header-cart-item-info">
-                  1 x $17.00
-                </span>
-              </div>
-            </li> --}}
-          </ul>
+					<div class="header-cart-buttons flex-w w-full">
+						<a href="/cart" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+							View Cart
+						</a>
 
-          <div class="w-full">
-            {{!-- <div class="header-cart-total w-full p-tb-40">
-              Total: $75.00
-            </div> --}}
-
-            <div class="header-cart-buttons flex-w w-full">
-              <a
-                href="/cart"
-                class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10"
-              >
-                View Cart
-              </a>
-
-              <a
-                href=""
-                class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10"
-              >
-                Check Out
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+						<a href="shoping-cart.html" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+							Check Out
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <!-- breadcrumb -->
     <div class="container">
@@ -415,7 +375,7 @@
           <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
 
-        <a href="product.html" class="stext-109 cl8 hov-cl1 trans-04">
+        <a href="/shop" class="stext-109 cl8 hov-cl1 trans-04">
           {{product_list.category}}
           <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
@@ -428,7 +388,7 @@
 
     <!-- Product Detail -->
     <section class="sec-product-detail bg0 p-t-65 p-b-60">
-      <div class="container">
+      <div class="container" >
         <div class="row">
           <div class="col-md-6 col-lg-7 p-b-30">
             <div class="p-l-25 p-r-30 p-lr-0-lg">
@@ -439,15 +399,17 @@
                 <div class="slick3 gallery-lb">
                   {{#each product_list.image}}
                     <div
-                      class="item-slick3"
+                      class="item-slick3 "
+                  
                       data-thumb="/images/uploads/{{this}}"
                     >
-                      <div class="wrap-pic-w pos-relative">
-                        <img src="/images/uploads/{{this}}" alt="IMG-PRODUCT" />
+                      <div class="wrap-pic-w pos-relative zoom-image-hover"  >
+                        <img src="/images/uploads/{{this}}" alt="IMG-PRODUCT"/>
 
                         <a
-                          class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+                          class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04 "
                           href="/images/uploads/{{this}}"
+                          
                         >
                           <i class="fa fa-expand"></i>
                         </a>
@@ -1703,6 +1665,7 @@
     </script>
     <!--===============================================================================================-->
     <script src="/vendorcoza/isotope/isotope.pkgd.min.js"></script>
+    <script src="/js/xzoom.js"></script>
     <!--===============================================================================================-->
     <script src="/vendorcoza/sweetalert/sweetalert.min.js"></script>
     <script src="/vendorcoza/sweetalert/sweetalert.min.js"></script> 
@@ -1712,31 +1675,32 @@
       form.addEventListener("submit",(e)=>{
       e.preventDefault()
       let quantity= document.getElementById("quantity").value
-      let url = "/cart/{{product_list._id}}"
+      let url = "/cart?id={{product_list._id}}"
       axios.post(url,{quantity:quantity}
      ).then(response=>{
-        console.log(response.data)
+       
       if(response.data.msg_outOfStock){
         swal("SORRY","Product is Out of Stock!","error")
       }
       if(response.data.msg_quantityOfStock){
         swal("SORRY","Quantity not Available with Seller! Try Reducing Quantity","error")
       }
-      if(response.data.msg_loginTocart){
-       swal("LOGIN","Please Login To Add To Cart","info") 
-      }
+      
       if(response.data.msg_addToCartSuccess){
        swal($('.js-addwish-b2, .js-addwish-detail').parent().parent().parent().find('.js-name-detail').html(),"is Added to Cart!","success") 
       }
-
+      if(response.data.msg_login){
+       
+         swal("LOGIN","Please Login To Add to Cart ","info")
+	
+      }
       
      })
      })
-     
      
     </script>
     <script>
-      
+      $('.zoom-image-hover').zoom()
       
      
 

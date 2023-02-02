@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var ifAdmin=require("../middleware/session")
+var {ifAdmin}=require("../middleware/session")
 const multer = require("../middleware/multer")
 const path = require('path')
 const { login ,

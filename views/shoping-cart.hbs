@@ -440,20 +440,22 @@
 								</span>
 							</div>
 						</div>
-
+<span  style="color: rgb(244, 5, 5); " class=" p-l-5"  id="valid" ></span>
 						<div class="flex-w flex-t bor12 p-t-15 p-b-30">
-							<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" id="couponCode" name="couponCode" placeholder="Coupon Code" style="width: 270px;">
+							
+							<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-b-5" type="text" id="couponCode" name="couponCode" placeholder="Coupon Code" style="width: 270px;">
 							<div class="size-208 w-full-ssm">
 								
 							</div>
+							
 
 							<div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
 								
 								
-								<div class="p-t-15">
+								<div class="p-t-25">
 									
 
-									<div class="rs1-select2 rs2-select2 m-b-12 m-t-9">
+									<div class="rs1-select2 rs2-select2 ">
 										{{!-- <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code"> --}}
 										{{!-- <select class="js-select2" name="time">
 											<option>Select a country...</option>
@@ -462,11 +464,14 @@
 										</select>
 										<div class="dropDownSelect2"></div> --}}
 									</div>
-
+                                    
 									{{!-- <div class="bor8 bg0 m-b-12"> --}}
-										<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5" style="width: 168px" onclick="applyCoupon()"  >
+										
+										<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-7" style="width: 168px" onclick="applyCoupon()"  >
 									Apply coupon
+									
 								</div>
+								
 									{{!-- </div> --}}
 
 									{{!-- <div class="bor8 bg0 m-b-22">
@@ -475,9 +480,11 @@
 									
 									
 								</div>
+								
 							</div>
+							
 						</div>
-
+                         
 						<div class="flex-w flex-t p-t-27 p-b-33">
 							<div class="size-208">
 								<span class="mtext-101 cl2">
@@ -661,7 +668,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
  <script>
 	let userID='{{userId}}'
 		function send(productId){
-			axios.post('/checkout/'+productId,{
+			axios.patch('/cart?id='+productId,{
 				data:{
                 userId:userID,
 				increment:true
@@ -672,6 +679,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		if(response.data.msg_quantityOfStock){
 			let value =document.getElementById(`quantity${productId}`).value-1
               document.getElementById(`quantity${productId}`).value= value
+			  document.getElementById("valid").innerHTML=""
 			Swal.fire({
   icon: 'error',
   title: 'SORRY',
@@ -683,6 +691,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       document.getElementById(`price${productId}`).innerHTML=`₹${response.data.totalPrice}`
 	  document.getElementById("grandPrice").innerHTML=`₹${response.data.grandPrice}`
 	  document.getElementById("totalPrice").innerHTML=`₹${response.data.grandPrice}`
+	  document.getElementById("valid").innerHTML=""
 		}
     })
     .catch(error => {
@@ -703,15 +712,20 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   confirmButtonText: 'Yes, delete it!'
 }).then((result) => {
   if (result.isConfirmed) {
-   axios.post('/checkout/'+productId,{
+   axios.patch('/cart?id='+productId,{
 				data:{
                 userId:userID,
 				increment:false
 				}
 			})
     .then(response => {
+		
       if(response.data.msg_delete){
+		document.getElementById("grandPrice").innerHTML=`₹${response.data.grandPrice}`
+		document.getElementById("totalPrice").innerHTML=`₹${response.data.grandPrice}`
 		document.getElementById(productId).style.display="none"
+		document.getElementById("valid").innerHTML=""
+		
 		 Swal.fire(
       'Deleted!',
       'Your file has been deleted.',
@@ -726,7 +740,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 })
 		}
 		else{
-			axios.post('/checkout/'+productId,{
+			axios.patch('/cart?id='+productId,{
 				data:{
                 userId:userID,
 				increment:false
@@ -735,11 +749,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     .then(response => {
       if(response.data.msg_delete){
 		document.getElementById(productId).style.display="none"
+		document.getElementById("valid").innerHTML=""
 	  }
 	  else{
 		document.getElementById(`price${productId}`).innerHTML=`₹${response.data.totalPrice}`
 		document.getElementById("grandPrice").innerHTML=`₹${response.data.grandPrice}`
 		document.getElementById("totalPrice").innerHTML=`₹${response.data.grandPrice}`
+		document.getElementById("valid").innerHTML=""
+
 	  }
     })
     .catch(error => {
@@ -750,13 +767,49 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
   function applyCoupon(){
 	let couponCode= document.getElementById("couponCode").value
-	axios.post('/coupon',{couponCode})
+	axios.post('/coupon',{couponCode}).then((response)=>{
+		console.log(response)
+		if(response.data.status){
+	   document.getElementById("grandPrice").innerHTML=`₹${response.data.totalPrice}`
+	   document.getElementById("valid").style.color="rgb(22 104 6)";
+	   document.getElementById("valid").innerHTML=response.data.msg
+	   innerHTML=response.data.msg
+	   document.getElementById("couponCode").value=null
+		}
+		else{
+			if(response.data.msg=="Coupon Already Applied"){
+			document.getElementById("valid").style.color="rgb(244, 5, 5)"	
+			document.getElementById("valid").innerHTML=response.data.msg
+			setTimeout(()=>{
+		document.getElementById("valid").style.color="rgb(22 104 6)"
+		document.getElementById("valid").innerHTML="Coupon Applied"	
+		},3000)
+		document.getElementById("couponCode").value=null		
+			}
+			else{
+		document.getElementById("grandPrice").innerHTML=`₹${response.data.totalPrice}`
+		document.getElementById("valid").style.color="rgb(244, 5, 5)"
+		document.getElementById("valid").innerHTML=response.data.msg
+		document.getElementById("couponCode").value=null
+		setTimeout(()=>{
+		document.getElementById("valid").innerHTML=""	
+		},3000)	
+		}
+		}
+	})
 	
 
   }
 
   
- 
+ if({{msg_quantityOfStock}}){
+	Swal.fire({
+  icon: 'error',
+  title: 'SORRY',
+  text: 'Quantity Not Available with Seller!',
+  
+})
+ }
 
 
 	</script>

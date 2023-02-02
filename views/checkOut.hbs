@@ -54,6 +54,7 @@
       sizes="114x114"
       href="/imgNA/logos/apple-touch-icon-114x114.png"
     />
+    
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="/imagescoza/icons/favicon.png" />
     <!--===============================================================================================-->
@@ -66,7 +67,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="/fontscoza/font-awesome-4.7.0/css/font-awesome.min.css"
+      href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     />
     <!--===============================================================================================-->
     <link
@@ -75,11 +76,11 @@
       href="/fontscoza/iconic/css/material-design-iconic-font.min.css"
     />
     <!--===============================================================================================-->
-    <link
+    {{!-- <link
       rel="stylesheet"
       type="text/css"
       href="/fontscoza/linearicons-v1.0.0/icon-font.min.css"
-    />
+    /> --}}
     <!--===============================================================================================-->
     <link
       rel="stylesheet"
@@ -160,9 +161,15 @@
               </div>
 
               <div class="right-top-bar flex-w h-full">
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
-                  Help & FAQs
-                </a>
+                {{#if msg_login}}
+						<a href="/logout" class="flex-c-m trans-04 p-lr-25">
+							LOGOUT
+						</a>
+						{{else}}
+            <a href="/login" class="flex-c-m trans-04 p-lr-25">
+							LOGIN
+						</a>
+						{{/if}} 
 
                 <a href="#" class="flex-c-m trans-04 p-lr-25">
                   My Account
@@ -471,6 +478,7 @@
         class="page-title-section bg-img cover-background"
         
         data-background="img/bg/page-title.jpg"
+        style="padding: 0px;"
       >
         <div class="container">
 
@@ -488,7 +496,7 @@
 
       <!-- CHECKOUT
         ================================================== -->
-      <section class="md">
+      <section class="md" style="padding-top: 20px;">
         <div class="container">
           <div class="row">
             <div class="col-12">
@@ -527,7 +535,7 @@
                   </p>
                   <div class="collapse" id="collapseExample">
                     <div class="card card-body">
-                    <form id="newaddress" >
+                    <form id="newAddress" >
 
                         <div class="row">
 
@@ -536,10 +544,10 @@
                             <div class="form-group">
                               <label>First Name</label>
                               <input
-                              id="firstname"
+                              id="firstName"
                                 type="text"
                                 class="form-control"
-                                name="name"
+                                name="firstName"
                                 placeholder="Your name here"
                               />
                             </div>
@@ -551,10 +559,10 @@
                             <div class="form-group">
                               <label>Last Name</label>
                               <input
-                              id="lastname"
+                              id="lastName"
                                 type="text"
                                 class="form-control"
-                                name="lastname"
+                                name="lastName"
                                 placeholder="Your last name here"
                               />
                             </div>
@@ -588,7 +596,7 @@
                               id="phone"
                                 type="text"
                                 class="form-control"
-                                name="state"
+                                name="phone"
                                 placeholder="Your phone number here"
                               />
                             </div>
@@ -607,7 +615,7 @@
                               id="state"
                                 type="text"
                                 class="form-control"
-                                name="companyname"
+                                name="state"
                                 placeholder="Your company name here"
                               />
                             </div>
@@ -654,7 +662,7 @@
                             <div class="form-group">
                               <label>Zip Code</label>
                               <input
-                              id="pincode"
+                              id="zipcode"
                                 type="text"
                                 class="form-control"
                                 name="zipcode"
@@ -676,7 +684,7 @@
                               id="street"
                                 type="text"
                                 class="form-control"
-                                name="address1"
+                                name="street"
                                 placeholder="Your address here"
                               />
                             </div>
@@ -691,7 +699,7 @@
                               id="address"
                                 type="text"
                                 class="form-control"
-                                name="address2"
+                                name="address"
                                 placeholder="Your address here"
                               />
                             </div>
@@ -731,18 +739,24 @@
                     </p>
                   <div class="collapse" id="collapseExample1">
                     <div class="card card-body">
+                      <form id="procceed" method="post" action="/order">
+                      <div class="row" id="userAddresses">
+                        {{#each userList.address}}
+                        <div class="col-sm-6" id="hide{{this._id}}">
                       <div class="form-check">
                         
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-  <label class="form-check-label" for="flexRadioDefault1">
-    Default radio
+
+                          
+                        
+  <input class="form-check-input" type="radio" name="exampleRadios" id="{{this._id}}" value="{{this._id}}">
+  <label class="form-check-label" for="{{this._id}}">
+    <h6>{{this.firstName}} {{this.lastName}} <i style="font-size:18px;margin-left: 10px;"  onclick="edit('{{this._id}}')" class="fa">&#xf044;</i> <i class="fa fa-trash" onclick="deleteAddress('{{this._id}}')" style="font-size:18px;color:red; margin-left: 7px;" ></i></h6>
+  
+   <p>{{this.address}} <br> {{this.street}} {{this.city}} <br> {{this.state}} {{this.country}} {{this.zipCode}} <br>{{this.phone}} </p>
   </label>
 </div>
-<div class="form-check">
-  <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-  <label class="form-check-label" for="flexRadioDefault2">
-    <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-  </label>
+</div>
+{{/each}}
 </div>
                     </div>
                   </div>
@@ -767,7 +781,7 @@
                   <tbody>
                     <tr>
                       <th>Cart Subtotal:</th>
-                      <td class="text-gray-dark">$2,548.50</td>
+                      <td class="text-gray-dark">MRP₹{{subTotalPrice}}</td>
                     </tr>
                     {{!-- <tr>
                       <th>Shipping:</th>
@@ -775,21 +789,259 @@
                     </tr>
                     <tr> --}}
                       <th>Coupon Discount:</th>
-                      <td class="text-gray-dark">$9.72</td>
+                      <td class="text-gray-dark">MRP₹{{discount}}</td>
                     </tr>
                     <tr>
                       <th>Total:</th>
-                      <td class="text-lg text-gray-dark">$2,584.72</td>
+                      <td class="text-lg text-gray-dark">MRP₹{{totalPrice}}</td>
+                    </tr>
+                     <tr>
+                      <th><label class="form-check-label" for="flexCheckChecked">
+   Pay Via PayPal
+  </label></th>
+                      <td class="text-lg text-gray-dark"><div class="form-check">
+  <input class="form-check-input" type="radio"  name="flexCheck" id="flexCheckChecked" value="online" >
+  
+</div></td>
+                    </tr>
+                    <tr>
+                      <th><label class="form-check-label" for="flexCheckChecked">
+   Cash on Delivery
+  </label></th>
+                      <td class="text-lg text-gray-dark"><div class="form-check">
+  <input class="form-check-input" type="radio" value="COD" name="flexCheck" id="flexCheckChecked" checked>
+  
+</div></td>
                     </tr>
                   </tbody>
                 </table>
+                <div  id="paypal-button-container">
 
+                </div>
+                
+<button  type="submit"  class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer mt-3" id="placeOrder">
+							Place Order
+						</button>
               </div>
-
+              
             </div>
             <!-- end right pannel section -->
           </div>
         </div>
+        </form>
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" onclick="closemodal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+        <div class="card card-body">
+                    <form id="modalAddress" >
+
+                        <div class="row">
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group" >
+                              <label>First Name</label>
+                              <input
+                              id="modalfirstName"
+                                type="text"
+                                class="form-control"
+                                name="firstName"
+                                placeholder="Your name here"
+                              />
+                            </div>
+
+                          </div>
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group">
+                              <label>Last Name</label>
+                              <input
+                              id="modallastName"
+                                type="text"
+                                class="form-control"
+                                name="lastName"
+                                placeholder="Your last name here"
+                              />
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div class="row">
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group">
+                              <label>Email Address</label>
+                              <input
+                              id="modalemail"
+                                type="email"
+                                class="form-control"
+                                name="email"
+                                placeholder="Your email address here"
+                              />
+                            </div>
+
+                          </div>
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group">
+                              <label>Phone</label>
+                              <input
+                              id="modalphone"
+                                type="text"
+                                class="form-control"
+                                name="phone"
+                                placeholder="Your phone number here"
+                              />
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div class="row">
+
+                          <div class="col-sm-6"style="height: 80px;">
+
+                            <div class="form-group">
+                              <label>State</label>
+                              <input
+                              id="modalstate"
+                                type="text"
+                                class="form-control"
+                                name="state"
+                                placeholder="Your company name here"
+                              />
+                            </div>
+
+                          </div>
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group">
+                              <label>Country</label>
+                              <input
+                               id="modalcountry"
+                                type="text"
+                                class="form-control"
+                                name="country"
+                                placeholder="Your company name here"
+                              />
+                              </select>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div class="row">
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group">
+                              <label>City / Town </label>
+                              <input
+                              id="modalcity"
+                                type="text"
+                                class="form-control"
+                                name="city"
+                                placeholder="Your city name here"
+                              />
+                            </div>
+
+                          </div>
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group">
+                              <label>Zip Code</label>
+                              <input
+                              id="modalzipcode"
+                                type="text"
+                                class="form-control"
+                                name="zipcode"
+                                placeholder="Your zip code here"
+                              />
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        <div class="row">
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group">
+                              <label> Street</label>
+                              <input
+                              id="modalstreet"
+                                type="text"
+                                class="form-control"
+                                name="street"
+                                placeholder="Your address here"
+                              />
+                            </div>
+
+                          </div>
+
+                          <div class="col-sm-6" style="height: 80px;">
+
+                            <div class="form-group">
+                              <label>Address</label>
+                              <input
+                              id="modaladdress"
+                                type="text"
+                                class="form-control"
+                                name="address"
+                                placeholder="Your address here"
+                              />
+                            </div>
+
+                          </div>
+                          <div class="col-sm-6" style="height: 10px;">
+                          <div class="form-group">
+                              
+                              <input
+                              id="modalId"
+                                type="text"
+                                class="form-control"
+                                name="id"
+                                style="display:none;"
+                              />
+                            </div>
+
+                          </div>
+
+                        </div>
+
+    
+
+                       
+
+                       
+
+                      </form>
+                    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  onclick="closemodal()" >Close</button>
+        <button type="button" class="btn btn-primary" onclick="updateAddress()" >Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
       </section>
 
       <!-- FOOTER
@@ -961,33 +1213,225 @@
         aria-hidden="true"
       ></i></a>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://www.paypal.com/sdk/js?client-id={{CLIENT_ID}}" data-namespace="paypal_sdk"></script>
+
     <script>
        
+       const Toast = Swal.mixin({
+                toast: true,
+                position: "center-end",
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+            })
        
-        document.getElementById('newaddress').addEventListener('submit',(e)=>{
+        document.getElementById('newAddress').addEventListener('submit',(e)=>{
             e.preventDefault();
-             console.log('function for add new address')
-        const firstname = document.getElementById('firstname').value
-        const lastname = document.getElementById('lastname').value
-           console.log(firstname,'from the new address event listner')
-           console.log(lastname,'from the new address event listner')
-            const adname = firstname + "" + lastname
-           console.log('from the new address event listner')
-           console.log(adname,'adname from the address new function ')
-            axios.post('/address', {
-				        name: adname,
-                address: document.getElementById('address').value,
-                street: document.getElementById('street').value,
-                city: document.getElementById('city').value,
-                state: document.getElementById('state').value,
-                pincode: document.getElementById('pincode').value,
-                country: document.getElementById('country').value,
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value
-				})
-        })
-    </script>
+            let formData= new FormData(e.target)
+            let data =  Object.fromEntries(formData)
+            let {firstName,lastName,address,street,city,state,zipcode,country,phone,email}= data
+            if(firstName==""||lastName==""||address==""||street==""||city==""||zipcode==""||phone==""||phone==""){
+             Swal.fire({
+                        icon: 'warning',
+                        title: 'ALERT ',
+                        text: 'Please Fill All fields',
+                            
+                        }) 
+            }
+            else{
+          axios.post('/address', {
+            data
 
+                
+				}).then((response)=>{
+        if(response.status){
+          Swal.fire({
+                        icon: 'success',
+                        title: 'SUCCESS ',
+                        text: 'Address added Successfully!',
+                            
+                        })
+          e.target.reset()
+           let inner=``
+           for (let i = 0; i < response.data.userAddress.length; i++){
+           inner+= `<div class="col-sm-6" id="hide${response.data.userAddress[i]._id}">
+                      <div class="form-check">
+                        
+
+                          
+                        
+  <input class="form-check-input" type="radio" name="exampleRadios" id= ${response.data.userAddress[i]._id} value=${response.data.userAddress[i]._id}>
+  <label class="form-check-label" for=${response.data.userAddress[i]._id}>
+    <h6>${response.data.userAddress[i].firstName} ${response.data.userAddress[i].lastName} <i style="font-size:18px;margin-left: 10px;"  onclick="edit('${response.data.userAddress[i]._id}')" class="fa">&#xf044;</i> <i class="fa fa-trash" onclick="deleteAddress('${response.data.userAddress[i]._id}')" style="font-size:18px;color:red; margin-left: 7px;" ></i></h6>
+  
+   <p>${response.data.userAddress[i].address} <br> ${response.data.userAddress[i].street} ${response.data.userAddress[i].city} <br> ${response.data.userAddress[i].state} ${response.data.userAddress[i].country} ${response.data.userAddress[i].zipcode} <br>${response.data.userAddress[i].phone} </p>
+  </label>
+</div>
+</div>`
+  
+           }
+        document.getElementById("userAddresses").innerHTML=inner  
+        }
+        })
+            }
+        })
+
+        document.getElementById("procceed").addEventListener("submit",e=>{
+          e.preventDefault()
+          if(!document.querySelector("input[name='exampleRadios']:checked")){
+        Swal.fire({
+                        icon: 'warning',
+                        title: 'ALERT ',
+                        text: 'Please Select an An address',
+                            
+                        })
+          }
+           
+          else{
+             let id = document.querySelector("input[name='exampleRadios']:checked").value
+             let paymentMode = document.querySelector("input[name='flexCheck']:checked").value
+          axios.post("/order",{id,paymentMode})
+        .then(response=>{
+          console.log(response)
+          if(response.data.status){
+            console.log(5555555555)
+            location.href="/success"
+          }
+          else{
+            document.getElementById("placeOrder").style.display="none"
+            paypal_sdk.Buttons({createOrder:function(){
+            return response.data.id},
+           onApprove: function (data, actions) {
+            Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: "Payment Completed Successfully"
+                        })
+          return actions.order.capture()
+          .then(function (details) {
+            console.log(details)
+          verifyPayment(details)
+                                   
+          })
+          }
+            }).render('#paypal-button-container')
+          }
+        })
+          }
+        
+        })
+       function verifyPayment(Id){
+        axios.post(`/verifyPayment`,{Id}).then(response=>{
+
+       })
+       }
+
+
+        function edit(addressId){
+        axios.get(`/editAddress?id=${addressId}`).then(response=>{
+        let  {firstName,lastName,address,street,city,state,zipcode,country,phone,email,_id}=response.data.userAddress
+                document.getElementById('modalfirstName').value=firstName
+                document.getElementById('modallastName').value=lastName
+                 document.getElementById('modaladdress').value=address
+                document.getElementById('modalstreet').value=street
+                document.getElementById('modalcity').value=city
+               document.getElementById('modalstate').value=state
+                document.getElementById('modalzipcode').value=zipcode
+               document.getElementById('modalcountry').value=country
+                document.getElementById('modalphone').value=phone
+               document.getElementById('modalemail').value=email 
+               document.getElementById('modalId').value=_id       
+              $('#exampleModalCenter').modal('show')
+                     
+        }) 
+        }
+         function updateAddress(){
+         let form= document.getElementById('modalAddress')
+           let formData= new FormData(form)
+            let data =  Object.fromEntries(formData)
+            let {firstName,lastName,address,street,city,state,zipcode,country,phone,email}= data
+            if(firstName==""||lastName==""||address==""||street==""||city==""||zipcode==""||phone==""||phone==""){
+             Swal.fire({
+                        icon: 'warning',
+                        title: 'ALERT ',
+                        text: 'Please Fill All fields',
+                            
+                        }) 
+            }
+            else{
+          axios.patch('/address', {
+            data
+
+                
+				}).then(response=>{
+          if(response.data.msg){
+            let inner=``
+           for (let i = 0; i < response.data.userAddress.length; i++){
+           inner+= `<div class="col-sm-6" id="hide${response.data.userAddress[i]._id}">
+                      <div class="form-check">
+                        
+
+                          
+                        
+  <input class="form-check-input" type="radio" name="exampleRadios" id= ${response.data.userAddress[i]._id} value=${response.data.userAddress[i]._id}>
+  <label class="form-check-label" for=${response.data.userAddress[i]._id}>
+    <h6>${response.data.userAddress[i].firstName} ${response.data.userAddress[i].lastName} <i style="font-size:18px;margin-left: 10px;"  onclick="edit('${response.data.userAddress[i]._id}')" class="fa">&#xf044;</i> <i class="fa fa-trash" onclick="deleteAddress('${response.data.userAddress[i]._id}')" style="font-size:18px;color:red; margin-left: 7px;" ></i></h6>
+  
+   <p>${response.data.userAddress[i].address} <br> ${response.data.userAddress[i].street} ${response.data.userAddress[i].city} <br> ${response.data.userAddress[i].state} ${response.data.userAddress[i].country} ${response.data.userAddress[i].zipcode} <br>${response.data.userAddress[i].phone} </p>
+  </label>
+</div>
+</div>`
+  
+           }
+        document.getElementById("userAddresses").innerHTML=inner 
+   closemodal()
+   Swal.fire({
+                        icon: 'success',
+                        title: 'SUCCESS ',
+                        text: 'Address Updated Successfully!',
+                            
+                        })  
+          }
+        })
+            }
+         }
+      function deleteAddress(addressId){
+        Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+        axios.delete(`/address?id=${addressId}`).then(response=>{ 
+          if(response.data.msg){
+            
+            Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: "Address Deleted Successfully"
+                        });
+              document.getElementById(`hide${addressId}`).style.display="none"         
+          }
+        })
+  }
+})
+  
+      }
+    </script>
+    <script>
+      function closemodal(){
+           $('#exampleModalCenter').modal('hide')
+        }
+    </script>
     <!-- all js include start -->
 
     <!-- jQuery -->

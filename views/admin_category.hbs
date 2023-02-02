@@ -225,11 +225,11 @@
 
             <!-- PAGE INNER
             ================================================== -->
-            <div class="page-inner">
+            <div class="page-inner" style="height: 150vh;">
 
                 <!-- PAGE MAIN WRAPPER
                 ================================================== -->
-                <div id="main-wrapper">
+                <div id="main-wrapper" >
                     <!-- row -->
                     <div class="row align-items-center grid-margin">
                         <div class="col-12">
@@ -655,6 +655,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
       <script>
            function deleteCat(productId){
+            Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
              axios.delete(`/admin/category/${productId}`,{
 			}).then(response=>{
                 if(response.data.msg_delete){
@@ -674,7 +684,10 @@
                 
                 
             })
+  }
+  })
            }
+           
               
    
            

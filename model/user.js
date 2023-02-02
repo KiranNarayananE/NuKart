@@ -4,6 +4,7 @@ const { product } = require('./admin');
 const { ObjectId} =require('mongodb')
 
 
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -31,7 +32,8 @@ const userSchema = new mongoose.Schema({
       minlength: [6],
     },
     status: {
-      type: Boolean
+      type: Boolean,
+      default:true
     },
     address: [
       {
@@ -132,13 +134,64 @@ const userSchema = new mongoose.Schema({
   ]
   })
 
+  const orderSchema = new mongoose.Schema(
+    {
+        
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "user",
+            required: true
+        },
+        product: [{
+      }],
 
+      deliveryAddress: {
+            type: Object,
+            required: true
+        },
+        Order_date: {
+            type: String,
+            default: new Date(Date.now()).toLocaleDateString()
+        },
+        Delivery_Expected_date: {
+            type: String,
+        },
+            Payment: {
+            type: String,
+            required: true,
+            default:"COD"
+        },
+        Delivery_status: {
+            type: String,
+            default: "Pending"
+        },
+        couponapplied: {
+            type: Boolean,
+            default: false
+        },
+        cartDiscount: {
+            type: String
+        },
+        subTotalPrice: {
+            type: Number
+        },
+        discountPrice: {
+            type: Number,
+            default: 0
+        }
+
+    },
+    {
+        timestamps: true
+    } 
+)
 
 
   
   const user = mongoose.model('user', userSchema)
   const cart = mongoose.model('cart', cartSchema)
   const wishList = mongoose.model('wishList', wishListSchema)
+  const order = mongoose.model('order', orderSchema)
   
 
 
@@ -156,5 +209,6 @@ const userSchema = new mongoose.Schema({
 module.exports = {
     user,
     cart,
-    wishList
+    wishList,
+    order
   };

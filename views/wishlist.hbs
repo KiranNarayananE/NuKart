@@ -582,6 +582,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		if(!response.data.status){
 		swal("SUCCESS"," Removed from WishList!","error")
         document.getElementById(productId).style.display="none"	
+		}
+		else if(msg_login){
+			location.href="/"
 		}	
 		})
 		}
@@ -589,7 +592,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script>
      
       function addtoCart(productId){
-      let url = `/cart/${productId}`
+      let url = `/cart?id=${productId}`
+	  
       axios.post(url,{quantity:1}
      ).then(response=>{
         console.log(response.data)
@@ -599,8 +603,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
       if(response.data.msg_quantityOfStock){
         swal("SORRY","Quantity not Available with Seller! Try Reducing Quantity","error")
       }
-      if(response.data.msg_loginTocart){
-       swal("LOGIN","Please Login To Add To Cart","info") 
+      if(response.data.msg_login){
+       
+         swal("LOGIN","Please Login To Add to Cart ","info")
+	
       }
       if(response.data.msg_addToCartSuccess){
        swal("SUCCESS"," Product is Added to Cart!","success") 

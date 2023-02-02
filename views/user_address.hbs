@@ -794,13 +794,14 @@
       
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script>
         document.getElementById('newAddress').addEventListener('submit',(e)=>{
             e.preventDefault();
             axios.post('/address', {
                 data:{
                
-				firstName:document.getElementById('firstName').value,
+				        firstName:document.getElementById('firstName').value,
                 lastName:document.getElementById('lastName').value,
                 address: document.getElementById('address').value,
                 street:document.getElementById('street').value,
@@ -811,10 +812,19 @@
                 phone:document.getElementById('phone').value,
                 email:document.getElementById('email').value
                 }
-				})
-        
-        }).then((response)=>{
+				}).then((response)=>{
+        if(response.status){
+          Swal.fire({
+                        icon: 'success',
+                        title: 'SUCCESS ',
+                        text: 'Address added Successfully!',
+                            
+                        })
+          e.target.reset()
+        }
             
+        })
+        
         })
       </script>
        
