@@ -226,7 +226,7 @@
 
                 <div
                   class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
-                  data-notify="2"
+                  data-notify="{{cartCount}}"
                 >
                   <i class="zmdi zmdi-shopping-cart"></i>
                 </div>
@@ -234,7 +234,7 @@
                 <a
                   href="#"
                   class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                  data-notify="0"
+                  data-notify="{{wishListCount}}"
                 >
                   <i class="zmdi zmdi-favorite-outline"></i>
                 </a>
@@ -1222,7 +1222,7 @@
                 toast: true,
                 position: "center-end",
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 3000,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -1307,11 +1307,7 @@
             paypal_sdk.Buttons({createOrder:function(){
             return response.data.id},
            onApprove: function (data, actions) {
-            Toast.fire({
-                            icon: "success",
-                            title: "SUCCESS",
-                            text: "Payment Completed Successfully"
-                        })
+            
           return actions.order.capture()
           .then(function (details) {
             console.log(details)
@@ -1325,9 +1321,16 @@
           }
         
         })
-       function verifyPayment(Id){
-        axios.post(`/verifyPayment`,{Id}).then(response=>{
-
+       function async verifyPayment(Id){
+        await Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: "Payment Completed Successfully"
+                        })
+        axios.post(`/verifyPayment`,Id).then(response=>{
+        if(response.data.status){
+         location.href="/success" 
+        }
        })
        }
 

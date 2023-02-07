@@ -10,7 +10,7 @@ var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 const db = require("./config/server");
 var app = express();
-const hbs= require ("express-handlebars")
+const hbs= require ("hbs")
 
 
 // view engine setup
@@ -32,6 +32,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+hbs.registerHelper("equal", require("./middleware/equal.js"))
+
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);

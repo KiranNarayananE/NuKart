@@ -664,7 +664,10 @@
   cancelButtonColor: '#d33',
   confirmButtonText: 'Yes, delete it!'
 }).then((result) => {
-  if (result.isConfirmed) {
+    if(response.data.msg_login){
+        location.href="/admin"
+    }
+  else if (result.isConfirmed) {
              axios.delete(`/admin/category/${productId}`,{
 			}).then(response=>{
                 if(response.data.msg_delete){

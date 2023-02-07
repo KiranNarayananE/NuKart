@@ -22,17 +22,17 @@
     <link rel="apple-touch-icon" sizes="114x114" href="img/logos/apple-touch-icon-114x114.png" />
 
     <!-- common plugins -->
-    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="plugins/icomoon/style.css" />
-    <link rel="stylesheet" href="plugins/uniform/css/default.css" />
-    <link rel="stylesheet" href="plugins/switchery/switchery.min.css" />
+    <link rel="stylesheet" href="/pluginsNA/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/pluginsNA/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/pluginsNA/icomoon/style.css" />
+    <link rel="stylesheet" href="/pluginsNA/uniform/css/default.css" />
+    <link rel="stylesheet" href="/pluginsNA/switchery/switchery.min.css" />
 
     <!-- datepicker css -->
-    <link rel="stylesheet" href="plugins/bootstrap-datepicker/css/datepicker.css" />
+    <link rel="stylesheet" href="/pluginsNA/bootstrap-datepicker/css/datepicker.css" />
 
     <!-- theme core css -->
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/cssNA/styles.css" />
 
 </head>
 
@@ -50,7 +50,7 @@
         ================================================== -->
         <div class="page-sidebar">
             <a class="logo-box" href="index.html">
-                <img src="../img/logos/logo-footer.png" alt="...">
+                <img src="/images/logo-01.png" alt="...">
                 <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i>
                 <i class="icon-close" id="sidebar-toggle-button-close"></i>
             </a>
@@ -143,7 +143,7 @@
                         <div class="navbar-header">
                             <div class="logo-sm">
                                 <a href="#" id="sidebar-toggle-button"><i class="fa fa-bars"></i></a>
-                                <a class="logo-box" href="index.html"><img src="../img/logos/logo.png" class="logo" alt="..."></a>
+                                <a class="logo-box" href="index.html"><img src="/images/logo-01.png" class="logo" alt="..."></a>
                             </div>
                             <button type="button" class="navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                                 <i class="fa fa-angle-down"></i>
@@ -234,8 +234,8 @@
                                             <div class="col-md-12 mb-2">
                                                 <div class="form-group">
                                                     <label for="validationCustom01">Status</label>
-                                                    <select class="form-select form-control" id="validationCustom01" aria-label="Default select example">
-                                                        <option selected>Pending Payment</option>
+                                                    <select class="form-select form-control" id="validationCustom01" disabled aria-label="">
+                                                        <option selected>{{orderList.orderStatus}}</option>
                                                         <option value="1">Processing</option>
                                                         <option value="2">Completed</option>
                                                         <option value="3">Cancelled </option>
@@ -246,14 +246,11 @@
                                                 <div class="form-group">
                                                     <label>Date Created</label>
                                                     <div>
-                                                        <input type="text" class="form-control date-picker">
+                                                        <input type="text" readonly value="{{orderList.Order_date}}" class="form-control date-picker">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <label for="validationCustom02">Billing Name</label>
-                                                <input type="text" class="form-control" id="validationCustom02">
-                                            </div>
+                                           
                                         </div>
                                     </form>
 
@@ -270,32 +267,32 @@
                                         <div class="col-lg-auto me-xl-5 pe-xl-5 mb-4 mb-xl-0">
                                             <h6 class="text-uppercase fw-bold mb-3">billing</h6>
                                             <ul class="list-unstyled ps-0">
-                                                <li>Street Name Example</li>
-                                                <li>2233</li>
-                                                <li>Detroit</li>
-                                                <li>Michigan</li>
-                                                <li>56218</li>
-                                                <li>UK</li>
+                                                <li>{{orderList.firstName}}</li>
+                                                <li>{{orderList.deliveryAddress.address}}</li>
+                                                <li>{{orderList.deliveryAddress.city}}</li>
+                                                <li>{{orderList.deliveryAddress.state}}</li>
+                                                <li>{{orderList.deliveryAddress.zipcode}}</li>
+                                                <li>{{orderList.deliveryAddress.country}}</li>
                                             </ul>
                                             <strong class="d-block">Email address:</strong>
-                                            <a href="#">name@domain.com</a>
+                                            <a href="#">{{orderList.deliveryAddress.email}}</a>
                                             <strong class="d-block mt-3">Phone:</strong>
-                                            <a href="#">1234-5678</a>
+                                            <a href="#">{{orderList.deliveryAddress.phone}}</a>
                                         </div>
                                         <div class="col-lg-auto ps-xl-5">
                                             <h6 class="fw-bold text-uppercase mb-3">shipping</h6>
                                             <ul class="list-unstyled ps-0">
-                                                <li>Street Name Example</li>
-                                                <li>2233</li>
-                                                <li>Detroit</li>
-                                                <li>Michigan</li>
-                                                <li>56218</li>
-                                                <li>UK</li>
+                                                <li>{{orderList.firstName}}</li>
+                                                <li>{{orderList.deliveryAddress.address}}</li>
+                                                <li>{{orderList.deliveryAddress.city}}</li>
+                                                <li>{{orderList.deliveryAddress.state}}</li>
+                                                <li>{{orderList.deliveryAddress.zipcode}}</li>
+                                                <li>{{orderList.deliveryAddress.country}}</li>
                                             </ul>
-                                            <strong class="d-block">Email address:</strong>
-                                            <a href="#">name@domain.com</a>
+                                           <strong class="d-block">Email address:</strong>
+                                            <a href="#">{{orderList.deliveryAddress.email}}</a>
                                             <strong class="d-block mt-3">Phone:</strong>
-                                            <a href="#5551234">1234-5678</a>
+                                            <a href="#">{{orderList.deliveryAddress.phone}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -316,7 +313,7 @@
                                         <table class="table mb-0 order-details-table">
                                             <thead class="bg-light">
                                                 <tr>
-                                                    <th class="ps-4 id">ID</th>
+                                                    
                                                     <th class="name">Name</th>
                                                     <th class="text-end cost">Cost</th>
                                                     <th class="text-end qty">Qty</th>
@@ -324,14 +321,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {{#each orderList.product}}
                                                 <tr>
-                                                    <td class="ps-4"><a href="#"><strong>290397</strong></a></td>
-                                                    <td><a href="#">Men's Football Boots</a></td>
-                                                    <td class="text-end">$15.00</td>
-                                                    <td class="text-end">1</td>
-                                                    <td class="text-end">$15.00</td>
+                                                   
+                                                    <td><a href="#">{{this.productId.name}}</a></td>
+                                                    <td class="text-end">₹{{this.productId.price}}</td>
+                                                    <td class="text-end">{{this.quantity}}</td>
+                                                    <td class="text-end">₹{{this.productId.price}}</td>
                                                 </tr>
-                                                <tr>
+                                                {{/each}}
+                                                {{!-- <tr>
                                                     <td class="ps-4"><a href="#"><strong>290398</strong></a></td>
                                                     <td><a href="#">Sun Protection Cap</a></td>
                                                     <td class="text-end">$10.20</td>
@@ -344,7 +343,7 @@
                                                     <td class="text-end">$19.50</td>
                                                     <td class="text-end">1</td>
                                                     <td class="text-end">$19.50</td>
-                                                </tr>
+                                                </tr> --}}
                                             </tbody>
                                         </table>
                                     </div>
@@ -352,23 +351,23 @@
                                         <div class="col-auto me-5">
                                             <h6 class="fw-bold mb-2">Items Subtotal</h6>
                                             <span class="d-flex align-items-center">
-                                                3 Items
+                                                
                                                 <i class="fas fa-chevron-right f-s-11 text-primary px-3"></i>
-                                                <b>$298.00</b>
+                                                <b>₹{{orderList.subTotalPrice}}</b>
                                             </span>
                                         </div>
                                         <div class="col-auto me-5">
-                                            <h6 class="fw-bold mb-2">Shipping</h6>
+                                            <h6 class="fw-bold mb-2">Coupon discount</h6>
                                             <span class="d-flex align-items-center">
-                                                Flat Rate
+                                                
                                                 <i class="fas fa-chevron-right f-s-11 text-primary px-3"></i>
-                                                <b>$20.00</b>
+                                                <b>₹{{orderList.discountPrice}}</b>
                                             </span>
                                         </div>
                                         <div class="col-auto">
                                             <h6 class="fw-bold mb-2">Order Total</h6>
                                             <span class="d-flex align-items-center justify-content-lg-end">
-                                                <strong>$318.00</strong>
+                                                <strong>₹ {{orderList.totalPrice}}</strong>
                                             </span>
                                         </div>
                                     </div>
@@ -390,21 +389,18 @@
                                         <tbody>
                                             <tr>
                                                 <th colspan="2">
-                                                    <p class="m-0">Arnold Jackson</p>
+                                                    <p class="m-0">{{orderList.deliveryAddress.firstName}}</p>
                                                 </th>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Address:</th>
-                                                <td>3389 Eglinton Avenue, Windermere, London, SK 8GH.</td>
+                                                <td>{{orderList.deliveryAddress.address}} {{orderList.deliveryAddress.state}} {{orderList.deliveryAddress.city}} {{orderList.deliveryAddress.zipcode}} {{orderList.deliveryAddress.country}}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Phone :</th>
-                                                <td>(123) 456-7890</td>
+                                                <td>{{orderList.deliveryAddress.phone}}</td>
                                             </tr>
-                                            <tr>
-                                                <th scope="row">Mobile :</th>
-                                                <td>(+01) 12345 67890</td>
-                                            </tr>
+                                           
                                         </tbody>
                                     </table>
                                 </div>
@@ -420,9 +416,9 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Payment Type:</th>
-                                                <td>Credit Card</td>
+                                                <td>{{orderList.Payment}}</td>
                                             </tr>
-                                            <tr>
+                                            {{!-- <tr>
                                                 <th scope="row">Provider :</th>
                                                 <td>Visa ending in 2851</td>
                                             </tr>
@@ -433,7 +429,7 @@
                                             <tr>
                                                 <th scope="row">CVV :</th>
                                                 <td>xxx</td>
-                                            </tr>
+                                            </tr> --}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -451,8 +447,8 @@
                                         </div>
                                         <h5><b>UPS Delivery</b></h5>
                                         <div class="mt-2 pt-1">
-                                            <p class="mb-1"><span>Order ID :</span> xxxx048</p>
-                                            <p class="mb-0"><span>Payment Mode :</span> COD</p>
+                                            <p class="mb-1"><span>Order ID :</span> {{orderList.orderId}}</p>
+                                            <p class="mb-0"><span>Payment Mode :</span>{{orderList.Payment}} </p>
                                         </div>
                                     </div>
                                 </div>
@@ -658,31 +654,31 @@
     ================================================== -->
 
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="/pluginsNA/jquery/jquery.min.js"></script>
 
     <!-- popper -->
-    <script src="plugins/popper/js/popper.min.js"></script>
+    <script src="/pluginsNA/popper/js/popper.min.js"></script>
 
     <!-- bootstrap -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/pluginsNA/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- slimscroll -->
-    <script src="plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/pluginsNA/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- uniform -->
-    <script src="plugins/uniform/js/jquery.uniform.standalone.js"></script>
+    <script src="/pluginsNA/uniform/js/jquery.uniform.standalone.js"></script>
 
     <!-- switchery -->
-    <script src="plugins/switchery/switchery.min.js"></script>
+    <script src="/pluginsNA/switchery/switchery.min.js"></script>
 
     <!-- datepicker -->
-    <script src="plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="/pluginsNA/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
     <!-- form elements -->
-    <script src="js/pages/form-elements.js"></script>
+    <script src="/jsNA/pages/form-elements.js"></script>
 
     <!-- theme core scripts -->
-    <script src="js/main.js"></script>
+    <script src="/jsNA/main.js"></script>
 
     <!-- all js include end -->
 </body>

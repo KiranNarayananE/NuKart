@@ -99,7 +99,7 @@
                                 <i class="menu-icon icon-flash_on"></i><span>Orders</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="orders.html">Orders</a></li>
+                                <li><a href="/admin/user">Orders</a></li>
                                 <li><a href="order-details.html">Order Details</a></li>
                             </ul>
                         </li>
@@ -617,6 +617,13 @@
   if (result.isConfirmed) {
    axios.delete(`/admin/product/${productId}`,{
 			}).then(response=>{
+                if(response){
+      location.href= "/admin/product"
+
+      }
+      else{
+
+      
                 if(response.data.msg_delete){
                     document.getElementById(`row${productId}`).style.display ='none'
                     Swal.fire(
@@ -634,7 +641,7 @@
     )
                      }
                 
-                
+      }   
             })
            }
                  

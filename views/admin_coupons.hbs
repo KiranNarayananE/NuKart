@@ -95,7 +95,7 @@
                                 <i class="menu-icon icon-flash_on"></i><span>Orders</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="orders.html">Orders</a></li>
+                                <li><a href="/admin/orders">Orders</a></li>
                                 <li><a href="order-details.html">Order Details</a></li>
                             </ul>
                         </li>
@@ -726,6 +726,9 @@
   if (result.isConfirmed) {
    axios.delete(`/admin/coupon/${couponId}`,{
 			}).then(response=>{
+                if(response.data.msg_login){
+        location.href="/admin"
+    }
                 if(response.data.msg_delete){
                     document.getElementById(`row${couponId}`).style.display ='none'
                     document.getElementById('incorrects').innerHTML ="User Deleted Succesfully "

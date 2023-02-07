@@ -21,12 +21,32 @@
         </form>
       </div>
   </div>
-<script>
+
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+  const Toast = Swal.mixin({
+                toast: true,
+                position: "center-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+            })
   if({{msg_correct}}){
-    alert("OTP Verified"); 
+    Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: "OTP verified"
+                        });
     }
     if({{msg_exist}}){
-    alert("Email already Registered"); 
+    Toast.fire({
+                            icon: "error",
+                            text: "Email Already Registered"
+                        }) 
     }
 
   function validation(){
@@ -44,21 +64,33 @@ var atposition=y.indexOf("@");
 var dotposition=y.lastIndexOf(".");
 
    if (x.length<3) {
-    alert("Name must be filled out");
+    Toast.fire({
+                            icon: "error",
+                            text: "Name must be filled out"
+                        })
     val1=false
 	}
   else if(atposition<1||dotposition<atposition+2||dotposition+2>=y.length)
   {
-alert("Please enter a valid e-mailaddress")
+Toast.fire({
+                            icon: "error",
+                            text: "Please enter a valid   e-mailaddress"
+                        })
 val2=false
   }
   else if(pw1 =="" || pw2==""){
-  alert("entert both the feild")
+  Toast.fire({
+                            icon: "error",
+                            text: "entert both Password feild"
+                        })
   val3 = false
  }
 
   else if(pw2.length !=0 && pw2.length!=pw1.length||pw1!=pw2){
-    alert("enter same passwords")
+    Toast.fire({
+                            icon: "error",
+                            text: "enter same passwords"
+                        })
     val4 = false
   }
   

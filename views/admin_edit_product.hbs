@@ -91,7 +91,7 @@
                                 <i class="menu-icon icon-flash_on"></i><span>Orders</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="orders.html">Orders</a></li>
+                                <li><a href="/admin/user">Orders</a></li>
                                 <li><a href="order-details.html">Order Details</a></li>
                             </ul>
                         </li>
@@ -888,10 +888,16 @@
         'Content-Type': 'multipart/form-data'
       }
      }).then(response=>{
-      if(response){
+      if(response.data.msg_login){
+        location.href="/admin"
+    }
+    else{
+if(response){
       location.href= "/admin/product"
 
       }
+    }
+      
      })
      })
      

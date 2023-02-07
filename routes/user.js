@@ -7,9 +7,13 @@ const {
   enterOtp,
   enterPhone,
   verifyOtp,
+  viewSignup,
   signup,
   loginPost,
+  passwordView,
+  passwordVerify,
   shop,
+  search,
   categories,
   logout,
   productDetail,
@@ -28,6 +32,9 @@ const {
   viewWishList,
   applyCoupon,
   orderPost,
+  orderList,
+  orderCancel,
+
   success
 } = require("../controller/user");
 
@@ -41,10 +48,14 @@ router.get("/verifyphone", enterPhone);
 router.post("/verifyphone", enterOtp);
 
 router.post("/otpverify", verifyOtp);
-
+router.get("/signup", viewSignup)
 router.post("/signup", signup);
 
+router.get("/password", passwordView)
+router.patch("/password", passwordVerify)
+
 router.get("/shop", shop)
+router.post("/search",search)
 
 router.get('/category',categories)
 
@@ -71,7 +82,9 @@ router.post("/address",ifUser,addAddress)
 router.patch("/address",ifUserAxios,updateAddress)
 router.delete("/address",ifUserAxios,deleteAddress)
 router.get("/editAddress",ifUserAxios,getEditAddress)
-
+ 
+router.get("/orders",ifUser,orderList)
+router.patch("/orders",ifUserAxios,orderCancel)
 router.get("/success",ifUserAxios,success)
 
 router.get("/logout",ifUser, logout)

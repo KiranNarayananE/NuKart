@@ -136,14 +136,29 @@ const userSchema = new mongoose.Schema({
 
   const orderSchema = new mongoose.Schema(
     {
+      orderId: {
+        type: String,
         
+    },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "user",
             required: true
         },
         product: [{
-      }],
+          productId:{type:String,
+            ref:"product",
+            required: [true],
+        } ,
+          quantity:{
+            type:Number,
+            default:1,
+            required: [true]
+          } ,
+          totalPrice:{
+            type:Number
+          }
+        }],
 
       deliveryAddress: {
             type: Object,
@@ -161,14 +176,28 @@ const userSchema = new mongoose.Schema({
             required: true,
             default:"COD"
         },
-        Delivery_status: {
+        paypalDetails: {
+          id:{
+          type: String,
+          default: null
+          },
+          payer_id:{
             type: String,
-            default: "Pending"
+            default:null
+            }
         },
+        orderStatus: {
+          type: String,
+          default: "Confirmed"
+      },
         couponapplied: {
             type: Boolean,
             default: false
         },
+        couponCode: {
+          type: String,
+          default: null
+      },
         cartDiscount: {
             type: String
         },
@@ -178,6 +207,9 @@ const userSchema = new mongoose.Schema({
         discountPrice: {
             type: Number,
             default: 0
+        },
+        totalPrice: {
+            type: Number
         }
 
     },

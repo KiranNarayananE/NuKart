@@ -5,12 +5,13 @@ require("dotenv/config");
 const { ObjectId} =require('mongodb')
 const { category, 
         product,
-        coupon
+        coupon,
          } = require("../model/admin");
 
         
 const {
-  user
+  user,
+  order
   } = require("../model/user")
 
 
@@ -405,6 +406,53 @@ let editProduct =async(req,res) =>{
       console.log(err)
      }
     }
+
+    const orderList = async function (req, res, next) {
+      try{
+        let {orderreq}=req.query
+        let {userId}=req.session
+        let orderHistory=await order.find({}).populate("product.productId") 
+        if(!orderreq){
+          res.render("admin_orders",{orderList:orderHistory})
+        }
+       else{
+        let orderHistory=await order.findOne({orderId:orderreq}).populate("product.productId")
+        res.render("admin_orderdetails",{orderList:orderHistory})
+       }
+      }
+      catch(err){
+       console.log(err)
+     }
+     }
+      let orderAction = async (req,res)=>{
+  
+      try{
+        let {userId}= req.session
+        let {orderId,action}= req.body
+        orderHistory=await order.findOne({orderId:orderId})
+        let orderChange =await order.updateOne({orderId:orderId},{ $set:{orderStatus:action} })
+        if(orderChange.modifiedCount==0){
+            res.send({msg:false})
+        }
+        else if(orderChange.modifiedCount==1){
+          if(action=="cancelled"||action=="returned"){
+          for (let i = 0; i < orderHistory.product.length; i++) {
+            let productId = orderHistory.product[i].productId
+            let quantity= orderHistory.product[i].quantity
+           await product.findByIdAndUpdate(productId, { $inc: { quantity: -quantity } })
+        }
+      }
+          res.send({msg:true,action})
+        }
+        
+     
+      }
+     catch(err){
+      console.log(err)
+     }
+    }
+
+
 module.exports = {
   login,
   home,
@@ -426,6 +474,8 @@ module.exports = {
   postCreateCoupon,
   viewCoupon,
   deleteCoupon,
+  orderList,
+  orderAction,
   logout,
   
 };

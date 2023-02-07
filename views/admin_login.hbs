@@ -116,14 +116,16 @@ if ( email == null || email == "" ){
                     setTimeout(() => {
                     document.getElementById('incorrect').style.display ='none' ;},3000);  
   return false}
-  else if(pw =="" ||pw.length<6){
-     document.getElementById('incorrect').innerHTML="Enter Valid Password"
-                      document.getElementById('incorrect').style.display ='block';
-                    setTimeout(() => {
-                    document.getElementById('incorrect').style.display ='none' ;},3000);  
-  return false} 
+   
 else if(atposition<1||dotposition<atposition+2||dotposition+2>=y.length){
    document.getElementById('incorrect').innerHTML="Enter Valid Email Address"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+
+  return false}
+  else if(pw =="" ||pw.length<6){
+     document.getElementById('incorrect').innerHTML="Enter Valid Password"
                       document.getElementById('incorrect').style.display ='block';
                     setTimeout(() => {
                     document.getElementById('incorrect').style.display ='none' ;},3000);  
@@ -142,6 +144,10 @@ else if(atposition<1||dotposition<atposition+2||dotposition+2>=y.length){
  
    
 
+
+</script>
+<script>
+ 
 
 </script>
     </div>

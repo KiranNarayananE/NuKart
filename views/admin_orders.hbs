@@ -22,14 +22,14 @@
     <link rel="apple-touch-icon" sizes="114x114" href="img/logos/apple-touch-icon-114x114.png" />
 
     <!-- common plugins -->
-    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="plugins/icomoon/style.css" />
-    <link rel="stylesheet" href="plugins/uniform/css/default.css" />
-    <link rel="stylesheet" href="plugins/switchery/switchery.min.css" />
+    <link rel="stylesheet" href="/pluginsNA/bootstrap//css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/pluginsNA/font-awesome//css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/pluginsNA/icomoon/style.css" />
+    <link rel="stylesheet" href="/pluginsNA/uniform//css/default.css" />
+    <link rel="stylesheet" href="/pluginsNA/switchery/switchery.min.css" />
 
     <!-- theme core css -->
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/cssNA/styles.css" />
 
 </head>
 
@@ -47,7 +47,7 @@
         ================================================== -->
         <div class="page-sidebar">
             <a class="logo-box" href="index.html">
-                <img src="../img/logos/logo-footer.png" alt="...">
+                <img src="/images/logo-01.png" alt="...">
                 <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i>
                 <i class="icon-close" id="sidebar-toggle-button-close"></i>
             </a>
@@ -55,15 +55,15 @@
                 <div class="page-sidebar-menu">
                     <ul class="accordion-menu">
                         <li>
-                            <a href="index.html"> <i class="menu-icon icon-home4"></i><span>Dashboard</span> </a>
+                            <a href="/admin"> <i class="menu-icon icon-home4"></i><span>Dashboard</span> </a>
                         </li>
                         <li>
                             <a href="#">
                                 <i class="menu-icon icon-inbox"></i><span>Category</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="category.html">Category</a></li>
-                                <li><a href="add-categories.html">Add Categories</a></li>
+                                <li><a href="/admin/category">Category</a></li>
+                                <li><a href="/admin/add_category">Add Categories</a></li>
                             </ul>
                         </li>
                         <li>
@@ -71,10 +71,10 @@
                                 <i class="menu-icon icon-layers"></i><span>Products</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="products.html">Products</a></li>
-                                <li><a href="product-details.html">Product Details</a></li>
-                                <li><a href="product-cart.html">Product Cart</a></li>
-                                <li><a href="add-products.html">Add Products</a></li>
+                                <li><a href="/admin/product">Products</a></li>
+                                {{!-- <li><a href="product-details.html">Product Details</a></li>
+                                <li><a href="product-cart.html">Product Cart</a></li> --}}
+                                <li><a href="/admin/add_product">Add Products</a></li>
                             </ul>
                         </li>
                         <li>
@@ -82,20 +82,20 @@
                                 <i class="menu-icon icon-flash_on"></i><span>Orders</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="orders.html">Orders</a></li>
-                                <li><a href="order-details.html">Order Details</a></li>
+                                <li><a href="/admin/orders">Orders</a></li>
+                                {{!-- <li><a href="order-details.html">Order Details</a></li> --}}
                             </ul>
                         </li>
                         <li>
-                            <a href="customers.html"> <i class="menu-icon icon-code"></i><span>Customers</span> </a>
+                            <a href="/admin/user"> <i class="menu-icon icon-code"></i><span>Customers</span> </a>
                         </li>
                         <li>
                             <a href="#">
                                 <i class="menu-icon icon-format_list_bulleted"></i><span>Coupons</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="coupons.html">Coupons</a></li>
-                                <li><a href="create-coupons.html">Create Coupons</a></li>
+                                <li><a href="/admin/coupon">Coupons</a></li>
+                                <li><a href="/admin/create_coupon">Create Coupons</a></li>
                             </ul>
                         </li>
                         <li>
@@ -110,7 +110,7 @@
                         </li>
                         <li class="menu-divider"></li>
                         <li>
-                            <a href="#"> <i class="menu-icon icon-public"></i><span>Logout</span> </a>
+                            <a href="/admin/logout"> <i class="menu-icon icon-public"></i><span>Logout</span> </a>
                         </li>
                     </ul>
                 </div>
@@ -140,7 +140,7 @@
                         <div class="navbar-header">
                             <div class="logo-sm">
                                 <a href="#" id="sidebar-toggle-button"><i class="fa fa-bars"></i></a>
-                                <a class="logo-box" href="index.html"><img src="../img/logos/logo.png" class="logo" alt="..."></a>
+                                <a class="logo-box" href="index.html"><img src="/images/logo-01.png" class="logo" alt="..."></a>
                             </div>
                             <button type="button" class="navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                                 <i class="fa fa-angle-down"></i>
@@ -280,13 +280,14 @@
                                                     <th>Billing Name</th>
                                                     <th>Date</th>
                                                     <th>Total</th>
-                                                    <th>Payment Status</th>
+                                                    <th>Order Status</th>
                                                     <th>Payment Method</th>
                                                     <th>View Details</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {{#each orderList}}
                                                 <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
@@ -294,36 +295,70 @@
                                                             <label class="custom-control-label" for="customCheck2">&nbsp;</label>
                                                         </div>
                                                     </td>
-                                                    <td><a href="#">#SK2540</a> </td>
-                                                    <td>Nicolette Villeneuve</td>
+                                                    <td><a href="#">{{this.orderId}}</a> </td>
+                                                    <td>{{this.deliveryAddress.firstName}} {{this.deliveryAddress.lastName}}</td>
                                                     <td>
-                                                        20 Mar, 2022
+                                                        {{this.Order_date}}
                                                     </td>
                                                     <td>
-                                                        $400
+                                                        ₹{{this.totalPrice}}
+                                                    </td>
+                                                    <td id="status{{this.orderId}}">
+                                                        {{#equal this.orderStatus "delivered"}}
+                                                         <span class="badge rounded-pill bg-soft-green">Delivered</span>
+                                                       {{/equal}}
+                                                       {{#equal this.orderStatus "cancelled"}}
+                                                         <span class="badge rounded-pill bg-soft-pink">Cancelled</span>
+                                                       {{/equal}}
+                                                       
+                                                       {{#equal this.orderStatus "processing"}}
+                                                       <span class="badge rounded-pill bg-soft-orange">Processing</span>
+                                                       {{/equal}}
+                                                       {{#equal this.orderStatus "Confirmed"}}
+                                                         <span class="badge rounded-pill bg-soft-green">Confirmed</span>
+                                                       {{/equal}}
+                                                       {{#equal this.orderStatus "returned"}}
+                                                         <span class="badge rounded-pill bg-soft-pink">Returned</span>
+                                                       {{/equal}}
+                                                        
+                                                        
+                                                        
+
                                                     </td>
                                                     <td>
-                                                        <span class="badge rounded-pill bg-soft-green">Paid</span>
+                                                      {{this.Payment}}
                                                     </td>
                                                     <td>
-                                                        <i class="fab fa-cc-mastercard me-1"></i> Mastercard
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary btn-sm btn-rounded">
+                                                        <a href="/admin/orders?orderreq={{this.orderId}}"><button type="button" class="btn btn-primary btn-sm btn-rounded">
                                                             View Details
-                                                        </button>
+                                                        </button></a> 
                                                     </td>
-                                                    <td>
-                                                        <a href="#" class="me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                            <i class="far fa-edit text-primary"></i>
-                                                        </a>
-                                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                            <i class="far fa-trash-alt text-danger"></i>
-                                                        </a>
+                                                    <td class="">
+                                                        <div class="drop">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </button>
+  <ul class="dropdown-menu" id="drop{{this.orderId}}"  aria-labelledby="dropdownMenuButton1">
+    {{#equal this.orderStatus "Confirmed"}}
+     <li><a class="dropdown-item" onclick="edit('{{this.orderId}}','processing')" >Process Order</a></li>
+    <li><a class="dropdown-item"   onclick="edit('{{this.orderId}}','cancelled')"   >Cancel Order</a></li> 
+    <li><a class="dropdown-item"    onclick="edit('{{this.orderId}}','returned')"   >Return Order</a></li>                                                   
+    {{/equal}}
+    {{#equal this.orderStatus "processing"}}
+    <li><a class="dropdown-item" onclick="edit('{{this.orderId}}','delivered')" >Deliver Order</a></li>
+    <li><a class="dropdown-item"    onclick="edit('{{this.orderId}}','cancelled')"   >Cancel Order</a></li>
+      <li><a class="dropdown-item"    onclick="edit('{{this.orderId}}','returned')"   >Return Order</a></li>                                                  
+    {{/equal}}
+    {{#equal this.orderStatus "delivered"}}
+      <li><a class="dropdown-item"    onclick="edit('{{this.orderId}}','returned')"   >Return Order</a></li>                                                  
+    {{/equal}}
+  </ul>
+</div>
+
                                                     </td>
                                                 </tr>
-
-                                                <tr>
+                                            {{/each }}
+                                                {{!-- <tr>
                                                     <td>
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" id="customCheck3">
@@ -606,7 +641,7 @@
                                                             <i class="far fa-trash-alt text-danger"></i>
                                                         </a>
                                                     </td>
-                                                </tr>
+                                                </tr> --}}
 
                                             </tbody>
                                         </table>
@@ -811,27 +846,74 @@
 
     <!-- ALL JS INCLUDE
     ================================================== -->
-
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script>
+   const Toast = Swal.mixin({
+                toast: true,
+                position: "center-end",
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+            })
+        function edit(orderId,action){
+        
+        axios.patch('/admin/orders',{orderId,action}).then((response)=>{
+            console.log(response)
+            let{action}=response.data
+            
+        if(response.data.msg){
+        if(action=="cancelled"){
+         document.getElementById(`status${orderId}`).innerHTML=`<span class="badge rounded-pill bg-soft-pink">Cancelled</span>`  
+        }
+        else if(action=="processing"){
+         document.getElementById(`status${orderId}`).innerHTML=`<span class="badge rounded-pill bg-soft-orange">Processing</span>`  
+        document.getElementById(`drop${orderId}`).innerHTML=`<li><a class="dropdown-item" onclick="edit('${orderId}','delivered')" >Deliver Order</a></li>
+        <li><a class="dropdown-item"    onclick="edit('${orderId}','cancelled')"   >Cancel Order</a></li>
+         <li><a class="dropdown-item"    onclick="edit('${orderId}','returned')"   >Return Order</a></li> `
+        } 
+        else if(action=="delivered"){
+         document.getElementById(`status${orderId}`).innerHTML=`<span class="badge rounded-pill bg-soft-green">Delivered</span>`
+         document.getElementById(`drop${orderId}`).innerHTML=`<li><a class="dropdown-item"    onclick="edit('${orderId}','returned')"   >Return Order</a></li>`   
+        } 
+        else if(action=="returned"){
+         document.getElementById(`status${orderId}`).innerHTML=`<span class="badge rounded-pill bg-soft-pink">Returned</span>`
+            
+        } 
+        }
+        Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: `ORDER ${action}`
+                        });
+        })
+         
+        }
+     </script>
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="/pluginsNA/jquery/jquery.min.js"></script>
 
     <!-- popper -->
-    <script src="plugins/popper/js/popper.min.js"></script>
+    <script src="/pluginsNA/popper/js/popper.min.js"></script>
 
     <!-- bootstrap -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/pluginsNA/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- slimscroll -->
-    <script src="plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/pluginsNA/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- uniform -->
-    <script src="plugins/uniform/js/jquery.uniform.standalone.js"></script>
+    <script src="/pluginsNA/uniform/js/jquery.uniform.standalone.js"></script>
 
     <!-- switchery -->
-    <script src="plugins/switchery/switchery.min.js"></script>
+    <script src="/pluginsNA/switchery/switchery.min.js"></script>
 
     <!-- theme core scripts -->
-    <script src="js/main.js"></script>
+    <script src="/jsNA/main.js"></script>
 
     <!-- all js include end -->
 </body>

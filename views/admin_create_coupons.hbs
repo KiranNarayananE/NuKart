@@ -120,7 +120,7 @@
                   ></i>
                 </a>
                 <ul>
-                  <li><a href="">Orders</a></li>
+                  <li><a href="/admin/user">Orders</a></li>
                   <li><a href="">Order Details</a></li>
                 </ul>
               </li>
@@ -734,6 +734,10 @@
                     else{
                      let url = "/admin/create_coupon"
                      axios.post(url, inputData).then(response=>{
+                      if(response.data.msg_login){
+        location.href="/admin"
+    }
+    else{
                       if(response.data.status){
                         Swal.fire({
                         icon: 'success',
@@ -761,6 +765,7 @@
                         }) 
                        
                       }
+    }
                      })
 
                     }

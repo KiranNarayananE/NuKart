@@ -9,6 +9,17 @@ else{
 }
 }
 
+const ifAdminAxios= async(req,res,next)=>{
+    if(req.session.adminlogin){
+        next() 
+    }
+     else{
+        res.send({msg_login:true})
+     }   
+    }
+
+
+
 const ifUserAxios= async(req,res,next)=>{
     if(req.session.loginuser){
         if (await user.findOne({ _id: req.session.userId, status: true })){
@@ -45,4 +56,4 @@ else{
     res.redirect("/")
 }
 }
-module.exports={ifAdmin,ifUserAxios,ifUser}
+module.exports={ifAdmin,ifUserAxios,ifUser,ifAdminAxios}
