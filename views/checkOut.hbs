@@ -171,17 +171,11 @@
 						</a>
 						{{/if}} 
 
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
+                <a href="/profile" class="flex-c-m trans-04 p-lr-25">
                   My Account
                 </a>
 
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
-                  EN
-                </a>
-
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
-                  USD
-                </a>
+             
               </div>
             </div>
           </div>
@@ -228,13 +222,13 @@
                   class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart"
                   data-notify="{{cartCount}}"
                 >
-                  <i class="zmdi zmdi-shopping-cart"></i>
+                 <a href="/cart"> <i class="zmdi zmdi-shopping-cart"></i></a>
                 </div>
 
                 <a
-                  href="#"
+                  href="/wishList"
                   class="icon-header-item cl0 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                  data-notify="{{wishListCount}}"
+                  data-notify="{{wishlistCount}}"
                 >
                   <i class="zmdi zmdi-favorite-outline"></i>
                 </a>
@@ -265,7 +259,7 @@
               class="icon-header-item cl0 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
               data-notify="2"
             >
-              <i class="zmdi zmdi-shopping-cart"></i>
+              <a href="/cart"><i class="zmdi zmdi-shopping-cart"></i></a>
             </div>
 
             <a
@@ -474,44 +468,27 @@
 
       <!-- PAGE TITLE
         ================================================== -->
-      <section
-        class="page-title-section bg-img cover-background"
-        
-        data-background="img/bg/page-title.jpg"
-        style="padding: 0px;"
-      >
-        <div class="container">
+     <section class="page-title-section bg-img cover-background" style="padding-top: 25px; padding-bottom: 0px;" data-background="/imgNA/bg/page-title.jpg">
+            <div class="container">
+                    <div class="breadcrumbs-info">
+                    <ul class="ps-0">
+                        <li><a href="/">Home</a></li>
+                        <li> CHECKOUT</li>
+                    </ul>
+                </div>
+                <div class="title-info" style="text-align: center;padding-top: 35px;">
+                    <h1>SHOPPING CHECKOUT</h1></div>
+                
 
-          <div class="title-info">
-            <h1>Shop Checkout</h1></div>
-          <div class="breadcrumbs-info">
-            <ul class="ps-0">
-              <li><a href="home-shop-1.html">Home</a></li>
-              <li><a href="#">Shop Checkout</a></li>
-            </ul>
-          </div>
-
-        </div>
-      </section>
+            </div>
+        </section>
 
       <!-- CHECKOUT
         ================================================== -->
       <section class="md" style="padding-top: 20px;">
         <div class="container">
           <div class="row">
-            <div class="col-12">
-              <div class="process-steps mb-1-9 mb-lg-6">
-                <a class="step active" href=""><i
-                    class="ti-direction-alt"
-                  ></i><h4 class="step-title">1. Address</h4></a>
-                <a class="step" href=""><i class="ti-wallet"></i><h4
-                    class="step-title"
-                  >2. Payment</h4></a>
-                <a class="step" href=""><i class="ti-check-box"></i><h4
-                    class="step-title"
-                  >3. Review</h4></a>
-              </div>
-            </div>
+            
 
             <!-- left pannel section -->
             <div class="col-lg-9 col-12 pe-lg-2-3 mb-1-9 mb-lg-0">
@@ -783,6 +760,7 @@
                       <th>Cart Subtotal:</th>
                       <td class="text-gray-dark">MRP₹{{subTotalPrice}}</td>
                     </tr>
+                    
                     {{!-- <tr>
                       <th>Shipping:</th>
                       <td class="text-gray-dark">$26.50</td>
@@ -793,8 +771,9 @@
                     </tr>
                     <tr>
                       <th>Total:</th>
-                      <td class="text-lg text-gray-dark">MRP₹{{totalPrice}}</td>
+                      <td class="text-lg text-gray-dark" id="totalPrice">MRP₹{{totalPrice}}</td>
                     </tr>
+                    
                      <tr>
                       <th><label class="form-check-label" for="flexCheckChecked">
    Pay Via PayPal
@@ -809,15 +788,67 @@
    Cash on Delivery
   </label></th>
                       <td class="text-lg text-gray-dark"><div class="form-check">
-  <input class="form-check-input" type="radio" value="COD" name="flexCheck" id="flexCheckChecked" checked>
+  <input class="form-check-input" type="radio" value="COD" onclick="display()" name="flexCheck" id="flexCheckChecked" checked>
   
 </div></td>
                     </tr>
+                    {{#equal userList.walletBalance 0}}
+                    {{else}}
+                    <tr>
+                      <th><label class="form-check-label" for="flexCheckChecked">
+   Wallet
+  </label>
+  <label class="form-check-label" for="flexCheckChecked">
+  Balance:₹{{userList.walletBalance}}
+  </label>
+  </th>
+                      <td class="text-lg text-gray-dark"><div class="form-check">
+  <input class="form-check-input" type="radio"  name="flexCheck" id="flexCheckChecked" onclick="display()" value="wallet" >
+  
+</div></td>
+                    </tr>
+           <tr>
+                      <th><label class="form-check-label" for="flexCheckChecked">
+   Wallet + Paypal
+  </label></th>
+                      <td class="text-lg text-gray-dark"><div class="form-check">
+  <input class="form-check-input" type="radio"  name="flexCheck" id="flexCheckChecked" value="wallet+paypal" >
+  
+</div></td>
+                    </tr>  
+                    {{/equal}}       
                   </tbody>
                 </table>
-                <div  id="paypal-button-container">
+                <div  id="paypal-button-container" class="mt-3">
 
                 </div>
+               
+  
+  {{!-- <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample5" aria-expanded="false" aria-controls="collapseExample">
+    CHOOSE PAYMENT METHOD
+  </button> --}}
+
+{{!-- <div class="collapse" id="collapseExample5">
+  <div class="card card-body">
+    <div class="form-check">
+      <label class="form-check-label" for="flexCheckChecked">
+   Wallet + Paypal
+  </label>
+  </div>
+  <input class="form-check-input " style="margin-left:10px;margin-top:7px"  type="radio"  name="flexCheck" id="flexCheckChecked" value="online" >
+  
+
+  
+    <div class="form-check">
+      <label class="form-check-label" for="flexCheckChecked">
+   Wallet + Paypal
+  </label>
+  </div>
+  <input class="form-check-input " style="margin-left:10px;margin-top:7px"  type="radio"  name="flexCheck" id="flexCheckChecked" value="online" >
+  
+
+  </div>
+</div> --}}
                 
 <button  type="submit"  class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer mt-3" id="placeOrder">
 							Place Order
@@ -1217,6 +1248,12 @@
         <script src="https://www.paypal.com/sdk/js?client-id={{CLIENT_ID}}" data-namespace="paypal_sdk"></script>
 
     <script>
+      function display(){
+      
+        document.getElementById("placeOrder").style.display="block"
+        document.getElementById("placeOrder").disabled = false
+        document.getElementById("paypal-button-container").innerHTML=``
+      }
        
        const Toast = Swal.mixin({
                 toast: true,
@@ -1280,9 +1317,10 @@
         })
             }
         })
-
-        document.getElementById("procceed").addEventListener("submit",e=>{
+        
+     document.getElementById("procceed").addEventListener("submit",e=>{
           e.preventDefault()
+         
           if(!document.querySelector("input[name='exampleRadios']:checked")){
         Swal.fire({
                         icon: 'warning',
@@ -1295,12 +1333,32 @@
           else{
              let id = document.querySelector("input[name='exampleRadios']:checked").value
              let paymentMode = document.querySelector("input[name='flexCheck']:checked").value
+             let totalPrice =document.getElementById("totalPrice").innerHTML.slice(4)
+            if(paymentMode=="online"||paymentMode=="wallet+paypal"){
+              document.getElementById("placeOrder").disabled = true 
+            }
+             if(paymentMode=="wallet"&& totalPrice>{{userList.walletBalance}}){
+             Swal.fire({
+                        icon: 'warning',
+                        title: 'ALERT ',
+                        text: 'Wallet Balance Insufficient',
+                            
+                        })
+             }
+             else if(paymentMode=="wallet+paypal"&& totalPrice<{{userList.walletBalance}}){
+             Swal.fire({
+                        icon: 'warning',
+                        title: 'ALERT ',
+                        text: 'Please Use Wallet as your Payment option',
+                            
+                        })
+             }
+             else{
           axios.post("/order",{id,paymentMode})
         .then(response=>{
           console.log(response)
           if(response.data.status){
-            console.log(5555555555)
-            location.href="/success"
+           
           }
           else{
             document.getElementById("placeOrder").style.display="none"
@@ -1311,7 +1369,7 @@
           return actions.order.capture()
           .then(function (details) {
             console.log(details)
-          verifyPayment(details)
+          verifyPayment(details,paymentMode)
                                    
           })
           }
@@ -1319,20 +1377,24 @@
           }
         })
           }
+          }
         
         })
-       function async verifyPayment(Id){
-        await Toast.fire({
+       function  verifyPayment(Id,paymentMode){
+        Id.paymentMode=paymentMode
+         Toast.fire({
                             icon: "success",
                             title: "SUCCESS",
                             text: "Payment Completed Successfully"
                         })
         axios.post(`/verifyPayment`,Id).then(response=>{
         if(response.data.status){
-         location.href="/success" 
+         location.href=`/success?orderId=${response.data.orderId}`
         }
        })
        }
+
+
 
 
         function edit(addressId){
@@ -1429,6 +1491,8 @@
 })
   
       }
+
+        
     </script>
     <script>
       function closemodal(){

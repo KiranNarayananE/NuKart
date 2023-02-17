@@ -26,7 +26,7 @@ const ifUserAxios= async(req,res,next)=>{
         next() 
         }
         else{
-            req.session.destroy()
+            req.session.loginuser=false
         }
 }
 else{
@@ -41,7 +41,7 @@ const ifUser= async(req,res,next)=>{
         next() 
         }
         else{
-            req.session.destroy()
+            req.session.loginuser=false
         }
 }
 else{

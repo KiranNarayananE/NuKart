@@ -471,7 +471,7 @@
                           <div>
                             <input
                               class="form-control form-control-lg"
-                              id="formFileLg"
+                              id="0"
                               name="myFiles"
                               type="file"
                               value="{{matchedproduct.image.[0]}}"
@@ -493,7 +493,7 @@
                             <input
                               class="form-control form-control-lg"
                               name="myFiles"
-                              id="formFileLg"
+                              id="1"
                               type="file"
                               value="{{matchedproduct.image.[1]}}"
                             />
@@ -511,7 +511,7 @@
                             <input
                               class="form-control form-control-lg"
                               name="myFiles"
-                              id="formFileLg"
+                              id="2"
                               type="file"
                               value="{{matchedproduct.image.[2]}}"
                             />
@@ -530,7 +530,7 @@
                               class="form-control form-control-lg"
                               name="myFiles"
                               value="{{matchedproduct.image.[3]}}"
-                              id="formFileLg"
+                              id="3"
                               type="file"
                             />
                           </div>
@@ -883,10 +883,17 @@
       e.preventDefault()
       let url = "/admin/product/{{matchedproduct._id}}"
       let formData = new FormData(form)
+      let position=[]
+      for(i=0;i<4;i++){
+        if(document.getElementById(i).value)
+        position.push(i)
+
+      }
+      formData.append("position", JSON.stringify(position))
       axios.put(url, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
-      }
+      },
      }).then(response=>{
       if(response.data.msg_login){
         location.href="/admin"

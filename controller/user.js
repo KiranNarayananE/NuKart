@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { product, category, coupon } = require("../model/admin");
+const { product, category, coupon,banner } = require("../model/admin");
 const db = require("../config/server");
 require("dotenv/config");
 const { v4: uuidv4 } = require('uuid');
@@ -30,67 +30,71 @@ const home = async function (req, res, next) {
  try{
 
   let {loginuser,loginTocart,userId,loginToWishList}=req.session
-  let cart_limit= await cart.findOne({userId}).populate("item.productId")
-  let wishListData =  await wishList.findOne({userId:userId})
-    .populate("wishList.productId","name price image")
-  let cartCount=0
-  let wishListCount=0
-  if(cart_limit){
-    cartCount=cart_limit.item.
-    length
-  }
-  if(wishListData){
-    wishListCount= wishListData.
-    wishList.length
-  }
   
-const product_list = await product.find({})
-  res.render("home",{product_list,cart_limit,msg_login:loginuser,msg_loginTocart:loginTocart,msg_loginTowishList:loginToWishList,cartCount,wishListCount});
+ 
+  let product_list = await product.aggregate([
+    {$match: { status: true }},
+    {
+        $lookup: {
+            from: "wishlists",
+            localField: "_id",
+            foreignField: "wishList.productId",
+            as: "wishList"
+        }
+    },
+    {
+        $addFields: {
+            wishList: {
+                $filter: {
+                    input: "$wishList",
+                    as: "order",
+                    cond: {$eq: ["$$order.userId", userId]}
+                }
+            }
+        }
+    }
+])
+let matchedBanner=await banner.find({})
+  res.render("home",{product_list,msg_login:loginuser,msg_loginTocart:loginTocart,msg_loginTowishList:loginToWishList,matchedBanner});
   req.session.loginTocart=false
   req.session.loginToWishList=false
  }
  catch(err){
-  console.log(err)
- }
+  next(err); }
 };
 
 const login = function (req, res, next) {
   try{
-    let{signup,loginerror_block,loginerror_email,loginerror_password}= req.session
-res.render("userlogin",{msg_create:signup,msgblock:loginerror_block,msg_email:loginerror_email,msgpassword:loginerror_password});
-req.session.signup  = false
+    
+    
+    let{loginerror_block,loginerror_email,loginerror_password}= req.session
+res.render("userlogin",{msgblock:loginerror_block,msg_email:loginerror_email,msgpassword:loginerror_password});
 req.session.loginerror_block  = false
 req.session.loginerror_email  = false
 req.session.loginerror_password  = false
   }
   catch(err){
-    console.log(err)
+    next(err)
   } 
 };
 
-const enterPhone = function(req, res, next) {
-    try{
-    res.render('enterotp')
-    }
-    catch(err){
-      console.log(err)
-    }
-  }
+
 
 const enterOtp = async function(req, res, next) {
   try{
     let {phone,password} = req.body
+    
     req.session.phone = phone
-    function sendOtp(mobile) {
+    function sendOtp(mobile,password) {
     client.verify.v2.services('VA38bef4cfc13a6013d179b33f24acdce5')
                 .verifications
                 .create({to: `+91${mobile}`, channel: 'sms'})
                 .then(verification =>{
-                  console.log(verification)
+                  console.log(phone)
                  
-                   res.send({status :true,phone:mobile})})
-.catch(error => {
-  console.error(error)
+                   res.send({status :true,phone:mobile,password})})
+.catch(err => {
+  next(err)
 
 })
   }
@@ -99,7 +103,7 @@ const enterOtp = async function(req, res, next) {
   
   if(find){
     
-    res.send({msg:"Number Already registered "})
+    res.send({msg:"Number Already registered"})
   }  
  else{
 
@@ -111,7 +115,7 @@ sendOtp(phone)
   else{
     if(find){
    
-  sendOtp(phone)
+  sendOtp(phone,"password")
     }
     else{
     res.send({msg:"Number not Registered"})
@@ -127,15 +131,16 @@ sendOtp(phone)
   const verifyOtp = function(req, res, next) {
     try{
     let {phone} =req.session
-    const enteredOTP = req.body.otp;
+    console.log(req.body)
+    const {otp,password} = req.body;
     
     
     client.verify.v2.services('VA38bef4cfc13a6013d179b33f24acdce5')
     .verificationChecks
-    .create({to: `+91${phone}`, code: enteredOTP})
+    .create({to: `+91${phone}`, code: otp})
     .then(verification_check => {if(verification_check.status=="approved"){
     req.session.otpcorrect = true
-    res.send({status:true})   
+    res.send({status:true,password})   
     }
         else{
           res.send({msg: "Enter correct otp"})
@@ -149,21 +154,11 @@ sendOtp(phone)
   
   }
   catch(err){
-    console.log(err)
+    next(err)
   }
 }  
 
-const viewSignup = function(req, res, next) {
-  try{
-    console.log(req.session.emailregistered);
-    res.render('usersignup',{"msg_correct":req.session.otpcorrect,msg_exist:req.session.emailregistered})
-    req.session.otpcorrect = false
-    req.session.emailregistered=false
-  }
-  catch(err){
-    console.log(err)
-  }
-}
+
    
 
 const signup = async function(req, res, next) {
@@ -173,8 +168,7 @@ const signup = async function(req, res, next) {
     const phone=req.session.phone
     let find = await user.findOne({email})
     if(find){
-      req.session.emailregistered=true
-      res.redirect("/signup")
+     res.send({msg:"Email Already Registered"})
     }
     else{
     
@@ -185,8 +179,8 @@ const signup = async function(req, res, next) {
         console.log(err);
         }
         else
-        req.session.signup  = true
-        res.redirect('/login');
+      
+        res.send({status:true})
         
       }
 
@@ -194,7 +188,7 @@ const signup = async function(req, res, next) {
     }
     }
     catch(err){
-      console.log(err)
+      next(err)
     }
   }
 
@@ -239,18 +233,10 @@ else{
 }
     }
     catch(err){
-      console.log(err)
+      next(err)
     }
 }
-const passwordView = async function (req, res, next) {
-  try{
-    res.render("forgotpassword")  
-  }
-  catch(err){
-    console.log(err)
-  }
 
-}
 
 const passwordVerify = async function (req, res, next) {
   try{
@@ -260,7 +246,7 @@ const passwordVerify = async function (req, res, next) {
     const salt = await bcrypt.genSalt();
     password = await bcrypt.hash(password, salt);
     confirm_password = await bcrypt.hash(confirm_password, salt)
-    let cartUpdate= await cart.updateOne({email},{$set:{password,confirm_password}})
+    let cartUpdate= await user.updateOne({email},{$set:{password,confirm_password}})
     res.send({status:true})
     }
     else{
@@ -269,44 +255,44 @@ const passwordVerify = async function (req, res, next) {
   }
 }
   catch(err){
-    console.log(err)
+    next(err)
   }
 
 }
 const shop = async function (req, res, next) {
   try{
     const {userId} =req.session
-  const product_list = await product.find({})
+    let product_list = await product.aggregate([
+      {
+          $lookup: {
+              from: "wishlists",
+              localField: "_id",
+              foreignField: "wishList.productId",
+              as: "wishList"
+          }
+      },
+      {
+          $addFields: {
+              wishList: {
+                  $filter: {
+                      input: "$wishList",
+                      as: "order",
+                      cond: {$eq: ["$$order.userId", userId]}
+                  }
+              }
+          }
+      }
+  ])
   const category_list = await category.find({})
-  let cart_limit= await cart.findOne({userId:userId}).populate("item.productId")
-  let wishListData =  await wishList.findOne({userId:userId})
-    .populate("wishList.productId","name price image")
-  let cartCount=0
-  let wishListCount=0
-  if(cart_limit){
-    cartCount=cart_limit.item.
-    length
-  }
-  if(wishListData){
-    wishListCount= wishListData.
-    wishList.length
-  }
-  res.render("shop",{category_list,product_list,cart_limit,msg_login:req.session.loginuser,wishListCount,cartCount});
+
+ 
+  res.render("shop",{category_list,product_list,msg_login:req.session.loginuser});
   }
   catch(err){
-    console.log(err)
+    next(err)
   }
 };  
-const logout = async function (req, res, next) {
-  try{
-  req.session.destroy()
-  res.redirect("/login")
-}
-catch(err){
-  console.log(err)
-}
 
-}
 
 const categories = async (req, res) => {
   try{
@@ -317,8 +303,8 @@ const categories = async (req, res) => {
     const product_list = await product.find({})
     const category_list = await category.find({})
 
-    let cart_limit= await cart.findOne({userId:req.session.userId}).populate("item.productId")
-    res.render("shop",{category_list,product_list,cart_limit,msg_login:req.session.loginuser});
+    
+    res.render("shop",{category_list,product_list,msg_login:req.session.loginuser});
     }
     else{
       const product_list = await product.find({category:id})
@@ -326,55 +312,98 @@ const categories = async (req, res) => {
       const category_list = await category.find({})
   
       let cart_limit= await cart.findOne({userId:req.session.userId}).populate("item.productId")
-      res.render("shop",{category_list,product_list,cart_limit,msg_login:req.session.loginuser}); 
+      res.render("shop",{category_list,product_list,msg_login:req.session.loginuser}); 
     }
   }
   catch(err){
-    console.log(err)
+    next(err)
   }
 }
 
 let productDetail = async (req,res)=>{
   try{
-   ; 
   let id1=req.params.id
   
-  let {outOfStock,quantityOfStock,loginTocart,addToCartError,addToCartSuccess,loginuser,userId}= req.session
-  let cart_limit= await cart.findOne({userId:userId}).populate("item.productId")
-  let wishListData =  await wishList.findOne({userId:userId})
-    .populate("wishList.productId","name price image")
-  let cartCount=0
-  let wishListCount=0
-  if(cart_limit){
-    cartCount=cart_limit.item.
-    length
-  }
-  if(wishListData){
-    wishListCount= wishListData.
-    wishList.length
-  }
+  let {loginuser,userId}= req.session
+  
+ 
   product_list= await product.findOne({_id:id1})
-  res.render("product-detail",{product_list,msg_login:loginuser,cart_limit,msg_outOfStock:outOfStock,msg_quantityOfStock:quantityOfStock,msg_loginTocart:loginTocart,msg_addToCartError:addToCartError,msg_addToCartSuccess:addToCartSuccess,wishListCount,cartCount})
-  req.session.outOfStock=false
-  req.session.quantityOfStock=false
-  req.session.loginTocart=false
-  req.session.addToCartError=false
-  req.session.addToCartSuccess=false
+  res.render("product-detail",{product_list,msg_login:loginuser})
   }
   catch(err){
-    console.log(err)
+    next(err)
   } 
 } 
 
 const profile = async function (req, res, next) {
   try{
+    
   const user_list= await user.findOne({_id:req.session.userId})
   res.render("user_profile",{user_list,msg_login:req.session.loginuser})
   }
   catch(err){
-    console.log(err)
+    next(err)
   }
 }
+
+
+  let editProfile =async(req,res) =>{
+    
+    try{
+      let {userId}=req.session
+    let { name,confirmNewPassword,password,newPassword,email} = req.body
+    console.log(req.body)
+     
+    let userList=await user.findOne({_id:userId}) 
+    if(password){
+
+      
+      console.log(userList);
+      bcrypt.compare(password,userList.password,async(err,data)=>{
+
+        if(err) {
+            console.log(err)
+        }
+        else if (data){
+          const salt = await bcrypt.genSalt();
+          password = await bcrypt.hash(newPassword,salt);
+          const id = await user.updateOne({_id:userId},{password,confirm_password:password})
+           res.send({msg:true})
+        }else{
+          res.send({msg:false,error:"Incorrect Password Entered"})
+             
+        }
+    })
+    }
+    else{
+      let userAccount=await user.findOne({email:email})
+    if(userList.email==email||!userAccount){
+      
+    let image
+    if(req.files[0]){
+    image = req.files[0].filename
+    }
+    let update =await user.updateOne({_id:userId},{$set:
+      {name,image:image
+      }})
+      if(update.modifiedCount==0){
+        req.session.product_updateerr=true
+          res.send({msgerr:true,error:"No change made"})
+      }
+      else if(update.modifiedCount==1){
+        req.session.product_update=true
+        res.send({msg:true})
+      }
+    }
+      else{
+        res.send({error:"Email already Registered"})
+      }
+    }
+    }
+    catch(err){
+      next(err) 
+    }
+    }
 
 const addToCart = async function (req, res, next) {
   try{
@@ -450,7 +479,7 @@ const addToCart = async function (req, res, next) {
   
 }
 catch(err){
-  console.log(err)
+  next(err)
 }
 }
 
@@ -458,37 +487,30 @@ catch(err){
 const viewCart = async function (req, res, next) {
   try{
   req.session.couponapplied=false
-  let {userId,loginuser,quantityOfStock,productName}=req.session
+  let {userId,loginuser,quantityOfStock,productName,cartEmpty}=req.session
   console.log(productName);
   let cartData =  await cart.findOne({userId:userId})
   .populate("item.productId","name price image")
-  let wishListData =  await wishList.findOne({userId:userId})
-    .populate("wishList.productId","name price image")
-  let cartCount=0
-  let wishListCount=0
-  if(wishListData){
-    wishListCount= wishListData.
-    wishList.length
-  }
+  
 
   if(cartData ){
-    cartCount=cartData.item.
-    length
   let cartDetail=cartData.item
   let grandPrice=cartDetail.reduce((acc,curr)=>
     acc+=curr.totalPrice,0)
  
-  res.render("shoping-cart",{cartData ,msg_login:req.session.loginuser,userId,grandPrice,msg_quantityOfStock:quantityOfStock,wishListCount,cartCount,productName})
+  res.render("shoping-cart",{cartData ,msg_login:req.session.loginuser,userId,grandPrice,msg_quantityOfStock:quantityOfStock,productName,msg_cartEmpty:cartEmpty})
   req.session.quantityOfStock=false
+  req.session.cartEmpty=false
    }
    else{
-    res.render("shoping-cart",{cartData ,msg_login:req.session.loginuser,userId,cartCount,wishListCount,msg_quantityOfStock:quantityOfStock,productName})
+    res.render("shoping-cart",{cartData ,msg_login:req.session.loginuser,userId,cartCount,wishListCount,msg_quantityOfStock:quantityOfStock,productName,msg_cartEmpty:cartEmpty})
     req.session.quantityOfStock=false
+    req.session.cartEmpty=false
    }
   
   }
   catch(err){
-    console.log(err)
+    next(err)
   }
 }
 
@@ -549,7 +571,7 @@ const cartEdit = async function (req, res, next) {
   }
 }
 catch(err){
-  console.log(err)
+  next(err)
 }
     }
 
@@ -578,7 +600,7 @@ catch(err){
       })
     }
     catch(err){
-      console.log(err)
+      next(err)
     }
     }
 
@@ -591,7 +613,7 @@ catch(err){
         res.send({userAddress:userAddress[0].address[0]})
       }
       catch(err){
-        console.log(err)
+        next(err)
       }
     }
 
@@ -610,7 +632,7 @@ catch(err){
         }
     }
     catch(err){
-      console.log(err)
+      next(err)
     }
     }
     let deleteAddress = async (req,res)=>{
@@ -631,51 +653,67 @@ catch(err){
       console.log(err)
      }
     }
-    const cartCheckout = async function (req, res, next) {
+
+    const getCheckout = async function (req, res, next) {
       try{
-      let {userId,loginuser,couponapplied,discount}= req.session
+      let {userId,loginuser,couponapplied,discount,proceedTocheckout}= req.session
+      if(proceedTocheckout){
+      if(!couponapplied){
+        discount=0
+      }
       let userList=await user.findOne({_id:userId})
     let cartItem=await cart.findOne({userId:userId},{"item": 1,_id:0}).populate("item.productId","quantity name")
     let wishListData =  await wishList.findOne({userId:userId})
     .populate("wishList.productId","name price image")
-  let cartCount=0
-  let wishListCount=0
   
-  cartCount=cartItem.item.
-    length
-  if(wishListData){
-    wishListCount= wishListData.
-    wishList.length
-  }
     let subTotalPrice=cartItem.item.reduce((acc,curr)=>
      acc+=curr.totalPrice,0)
-     let proceedTocheckout= true
+    
+     
+     res.render("checkout",{userList,msg_login:loginuser,subTotalPrice,totalPrice:subTotalPrice-discount,discount:discount,CLIENT_ID})
+        req.session.proceedTocheckout=false
+      }
+      else{
+        res.redirect("/")
+      }
+  }
+  catch(err){
+    next(err)
+    }
+  }
+
+    const cartCheckout = async function (req, res, next) {
+      try{
+      let {userId,loginuser,couponapplied,discount}= req.session
+    let cartItem=await cart.findOne({userId:userId},{"item": 1,_id:0}).populate("item.productId","quantity name")
+    if(cartItem){
+    
+     req.session.proceedTocheckout= true
      for (let i = 0; i < cartItem.item.length; i++) {
       let cartQuantity = cartItem.item[i].quantity
        let inventoryQuantity=cartItem.item[i].productId.quantity
        if(cartQuantity>inventoryQuantity){
         req.session.productName=cartItem.item[i].productId.name
-        proceedTocheckout=false
+        req.session.proceedTocheckout=false
         break
        }
        }
-       if(proceedTocheckout){
-    if(!couponapplied){
-      
-   
-      res.render("checkOut",{userList,msg_login:loginuser,subTotalPrice,totalPrice:subTotalPrice,discount:0,CLIENT_ID,wishListCount,cartCount})
-    }
-    else{
-      res.render("checkOut",{userList,msg_login:loginuser,subTotalPrice,totalPrice:subTotalPrice-discount,discount:discount,CLIENT_ID,cartCount,wishListCount})
-    }
+       if(req.session.proceedTocheckout){
+
+res.redirect("/checkout")  
   }
   else{
     req.session.quantityOfStock=true
     res.redirect("/cart")
   }
+}
+  else{
+    req.session.cartEmpty=true
+    res.redirect("/cart")
+  }
   }
   catch(err){
-    console.log(err)
+    next(err)
   }
     }
 
@@ -686,7 +724,7 @@ catch(err){
       try{
       let {userId,loginuser,discount,couponapplied,couponappliedCode}= req.session
       let {id,paymentMode}= req.body
-      
+      let paymentStatus
       console.log(paymentMode)
       let userList=await user.findOne({_id:userId})
       let cartItem=await cart.findOne({userId:userId})
@@ -698,7 +736,11 @@ catch(err){
         }
       const index= userList.address.findIndex(obj=>
         obj._id==id)
-        if(paymentMode=="online"){
+        if(paymentMode=="online"||paymentMode=="wallet+paypal"){
+          if(paymentMode=="wallet+paypal"){
+            totalPrice=totalPrice-userList.walletBalance 
+            paymentStatus="paid"
+          }
           req.session.addressId=id
           const request = new paypal.orders.OrdersCreateRequest();
     
@@ -717,27 +759,31 @@ catch(err){
   });
   
     const order = await paypalCliend.execute(request);
-    res.send({id: order.result.id });
+    res.send({id: order.result.id,paymentMode:paymentMode });
 
 
         }
-        else if (paymentMode=="COD"){
-          
-          order.create( {userId,product:cartItem.item,deliveryAddress:userList.address[index],subTotalPrice,discountPrice:discount,totalPrice,orderId:`LS${uuidv4().replace(/-/g, '').slice(0, 10)}`.toUpperCase(),couponCode},
+        else if (paymentMode=="COD"||paymentMode=="wallet"){
+          let orderId=`LS${uuidv4().replace(/-/g, '').slice(0, 10)}`.toUpperCase()
+          order.create( {userId,product:cartItem.item,deliveryAddress:userList.address[index],subTotalPrice,discountPrice:discount,totalPrice,orderId:orderId,Payment:paymentMode},
            async (err, data) => {
              if (err){
               console.log(err);
      
              }
              else if (data){
+              req.session.success=true
              await cart.updateOne({userId:userId}, { $set: {item: [] }})
+             if(paymentMode=="wallet")
+             await user.updateOne({userId:userId}, { $set: {walletBalance:0 }})
+
              for (let i = 0; i < cartItem.item.length; i++) {
               let productId = cartItem.item[i].productId
               let quantity= cartItem.item[i].quantity
              await product.findByIdAndUpdate(productId, { $inc: { quantity: -quantity } })
           }
               await coupon.updateOne({couponCode:couponappliedCode}, { $push: {users: {user:ObjectId(userId)} }})
-             res.send({status:true});
+             res.send({status:true,orderId:orderId});
                
              }
              else{
@@ -749,7 +795,7 @@ catch(err){
         }
       
       catch(err){
-        console.log(err)
+        next(err)
       }
     }
 
@@ -757,7 +803,7 @@ catch(err){
       try{
         let {userId,loginuser,discount,couponapplied,couponappliedCode,addressId}= req.session
          console.log(req.body)
-       const {id}=req.body
+       const {id,paymentMode}=req.body
        const {payer_id}=req.body.payer
         let userList=await user.findOne({_id:userId})
         let cartItem=await cart.findOne({userId:userId})
@@ -769,14 +815,18 @@ catch(err){
           if(couponapplied){
             totalPrice=subTotalPrice-discount
             }
-          order.create( {userId,product:cartItem.item,deliveryAddress:userList.address[index],subTotalPrice,discountPrice:discount,Payment:"paypal",paypalDetails:{id,payer_id},totalPrice,orderId:`LS${uuidv4().replace(/-/g, '').slice(0, 10)}`.toUpperCase(),couponappliedCode},
+            let orderId=`LS${uuidv4().replace(/-/g, '').slice(0, 10)}`.toUpperCase()
+          order.create( {userId,product:cartItem.item,deliveryAddress:userList.address[index],subTotalPrice,discountPrice:discount,Payment:paymentMode,paypalDetails:{id,payer_id},totalPrice,orderId:orderId,paymentStatus:"paid"},
             async (err, data) => {
               if (err){
                console.log(err); 
       
               }
               else if (data){
+                req.session.success=true
               await cart.updateOne({userId:userId}, { $set: {item: [] }})
+            if(paymentMode=="wallet+paypal")
+            await user.updateOne({userId:userId}, { $set: {walletBalance:0 }})
 
         for (let i = 0; i < cartItem.item.length; i++) {
             let productId = cartItem.item[i].productId
@@ -784,7 +834,7 @@ catch(err){
            await product.findByIdAndUpdate(productId, { $inc: { quantity: -quantity } })
         }
                await coupon.updateOne({couponCode:couponappliedCode}, { $push: {users: {user:ObjectId(userId)} }})
-              res.send({status:true});
+              res.send({status:true,orderId:orderId});
                 
               }
               else{
@@ -795,7 +845,7 @@ catch(err){
          
         }
       catch(err){
-        console.log(err)
+        next(err)
       }
     }
 
@@ -836,7 +886,7 @@ catch(err){
 
       }
       catch(err){
-        console.log(err)
+        next(err)
       }
   }
 
@@ -851,7 +901,7 @@ catch(err){
      
     }
     catch(err){
-      console.log(err)
+      next(err)
     }
     }
 
@@ -867,7 +917,7 @@ catch(err){
         
       let couponFind=await coupon.findOne({couponCode:couponCode})
       let cartItem=await cart.findOne({userId:userId},{"item": 1,_id:0})
-    
+      if(cartItem){
               let totalPrice=cartItem.item.reduce((acc,curr)=>
                acc+=curr.totalPrice,0)
       if(couponFind){
@@ -914,6 +964,10 @@ catch(err){
       }
     }
     else{
+      res.send({msg:"Your Cart is Empty",totalPrice:0}) 
+    }
+    }
+    else{
       res.send({msg:"Coupon Already Applied"})
     } 
   }
@@ -925,31 +979,19 @@ catch(err){
     try{
       let {orderreq}=req.query
       let {loginuser,loginTocart,userId,loginToWishList}=req.session
-      let cart_limit= await cart.findOne({userId}).populate("item.productId")
-      let orderHistory=await order.find({userId}).populate("product.productId")
-      let wishListData =  await wishList.findOne({userId:userId})
-        .populate("wishList.productId","name price image")
-      let cartCount=0
-      let wishListCount=0
-      if(cart_limit){
-        cartCount=cart_limit.item.
-        length
-      }
-      if(wishListData){
-        wishListCount= wishListData.
-        wishList.length
-      }
+      let orderHistory=await order.find({userId}).populate("product.productId").sort( {createdAt: -1 } ) 
+      let user_list=await user.findOne({_id:userId})
       if(!orderreq){
-        res.render("order",{msg_login:loginuser,orderList:orderHistory,cart_limit,cartCount,wishListCount})
+        res.render("order",{msg_login:loginuser,orderList:orderHistory,user_list})
       }
      else{
       let orderHistory=await order.findOne({orderId:orderreq}).populate("product.productId")
       console.log(orderHistory)
-      res.render("orderdetails",{msg_login:loginuser,orderList:orderHistory,cart_limit,cartCount,wishListCount})
+      res.render("orderdetails",{msg_login:loginuser,orderList:orderHistory,user_list})
      }
     }
     catch(err){
-     console.log(err)
+      next(err)
    }
    }
 
@@ -957,9 +999,9 @@ catch(err){
   
     try{
       let {userId}= req.session
-      let {orderId}= req.body
+      let {orderId,action}= req.body
       orderHistory=await order.findOne({orderId:orderId})
-      let orderChange =await order.updateOne({orderId:orderId},{ $set:{orderStatus:"cancelled"} })
+      let orderChange =await order.updateOne({orderId:orderId},{ $set:{orderStatus:action} })
       if(orderChange.modifiedCount==0){
           res.send({msg:false})
       }
@@ -973,37 +1015,18 @@ catch(err){
       }
     }
    catch(err){
-    console.log(err)
+    next(err)
    }
   }
  
   const search = async (req,res)=>{
   try {
-    let {name}=req.body;
-    let regExp = new RegExp(`${name}`,'i')
-    // let find = await product.find({name:{$regex:regExp}})
-    let {loginuser,loginTocart,userId,loginToWishList}=req.session
-  let cart_limit= await cart.findOne({userId}).populate("item.productId")
-  let wishListData =  await wishList.findOne({userId:userId})
-    .populate("wishList.productId","name price image")
-  let cartCount=0
-  let wishListCount=0
-  if(cart_limit){
-    cartCount=cart_limit.item.
-    length
-  }
-  if(wishListData){
-    wishListCount= wishListData.
-    wishList.length
-  }
-  
-const product_list = await product.find({name:{$regex:regExp}})
-  res.render("home",{product_list,cart_limit,msg_login:loginuser,msg_loginTocart:loginTocart,msg_loginTowishList:loginToWishList,cartCount,wishListCount});
-  req.session.loginTocart=false
-  req.session.loginToWishList=false
-
+    let {id}=req.query;
+    let regExp = new RegExp(`${id}`,'i')
+    const product_list = await product.find({name:{$regex:regExp}})
+    res.send({product_list})
   } catch (error) {
-   console.log(error) 
+    next(err) 
   }
 
   }
@@ -1011,23 +1034,38 @@ const product_list = await product.find({name:{$regex:regExp}})
 
   const success = async function (req, res, next) {
    try{
+    let{orderId}=req.query
     let {loginuser,loginTocart,userId}=req.session
-    res.render("success",{msg_login:loginuser,msg_loginTocart:loginTocart})
+    if(req.session.success){
+    res.render("success",{msg_login:loginuser,msg_loginTocart:loginTocart,orderId})
+    req.session.success=false
+    }
+    else
+    res.redirect("/")
    }
    catch(err){
-    console.log(err)
+    next(err)
   }
+  }
+
+  const logout = async function (req, res, next) {
+    try{
+    req.session.loginuser=false
+    res.redirect("/login")
+  }
+  catch(err){
+    next(err)
+  }
+  
   }
 module.exports = {
   home,
   login, 
-  enterPhone,
   enterOtp,
   verifyOtp,
-  viewSignup,
+ 
   signup,
   loginPost,
-  passwordView,
   passwordVerify,
   shop,
   search,
@@ -1035,6 +1073,7 @@ module.exports = {
   logout,
   productDetail,
   profile,
+  editProfile,
   addToCart,
   viewCart,
   cartEdit,
@@ -1043,6 +1082,7 @@ module.exports = {
   getEditAddress,
   updateAddress,
   deleteAddress,
+  getCheckout,
   cartCheckout,
   verifyPayment,
   addToWishList,

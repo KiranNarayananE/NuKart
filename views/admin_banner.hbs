@@ -2,7 +2,7 @@
 <html lang="en">
 
 
-<!-- Mirrored from smartshop.websitelayout.net/admin/product-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Jan 2023 16:00:59 GMT -->
+<!-- Mirrored from smartshop.websitelayout.net/admin//admin by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Jan 2023 16:00:16 GMT -->
 <head>
     <!-- metas -->
     <meta charset="utf-8" />
@@ -16,23 +16,20 @@
     <title>Smartshop - Responsive eCommerce Admin Dashboard</title>
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="img/logos/favicon.png" />
-    <link rel="apple-touch-icon" href="img/logos/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="img/logos/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon" sizes="114x114" href="img/logos/apple-touch-icon-114x114.png" />
+    <link rel="shortcut icon" href="/imgNA/logos/favicon.png" />
+    <link rel="apple-touch-icon" href="/imgNA/logos/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/imgNA/logos/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/imgNA/logos/apple-touch-icon-114x114.png" />
 
-    <!-- common plugins -->
-    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="plugins/icomoon/style.css" />
-    <link rel="stylesheet" href="plugins/uniform/css/default.css" />
-    <link rel="stylesheet" href="plugins/switchery/switchery.min.css" />
-
-    <!-- tagsinput plugin -->
-    <link rel="stylesheet" href="plugins/touchspin/jquery.bootstrap-touchspin.min.css" />
+    <!-- common /pluginsNA -->
+    <link rel="stylesheet" href="/pluginsNA/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/pluginsNA/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/pluginsNA/icomoon/style.css" />
+    <link rel="stylesheet" href="/pluginsNA/uniform/css/default.css" />
+    <link rel="stylesheet" href="/pluginsNA/switchery/switchery.min.css" />
 
     <!-- theme core css -->
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="/cssNA/styles.css" />
 
 </head>
 
@@ -49,8 +46,8 @@
         <!-- PAGE SIDEBAR
         ================================================== -->
         <div class="page-sidebar">
-            <a class="logo-box" href="index.html">
-                <img src="../img/logos/logo-footer.png" alt="...">
+            <a class="logo-box" href="/admin">
+                <img src="/images/logo-01.png" style="height: 36px;" alt="...">
                 <i class="icon-radio_button_unchecked" id="fixed-sidebar-toggle-button"></i>
                 <i class="icon-close" id="sidebar-toggle-button-close"></i>
             </a>
@@ -58,15 +55,15 @@
                 <div class="page-sidebar-menu">
                     <ul class="accordion-menu">
                         <li>
-                            <a href="index.html"> <i class="menu-icon icon-home4"></i><span>Dashboard</span> </a>
+                            <a href="/admin"> <i class="menu-icon icon-home4"></i><span>Dashboard</span> </a>
                         </li>
                         <li>
                             <a href="#">
                                 <i class="menu-icon icon-inbox"></i><span>Category</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="category.html">Category</a></li>
-                                <li><a href="add-categories.html">Add Categories</a></li>
+                                <li><a href="/admin/category">Category</a></li>
+                                <li><a href="/admin/add_category">Add Categories</a></li>
                             </ul>
                         </li>
                         <li>
@@ -74,10 +71,10 @@
                                 <i class="menu-icon icon-layers"></i><span>Products</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="products.html">Products</a></li>
-                                <li><a href="product-details.html">Product Details</a></li>
-                                <li><a href="product-cart.html">Product Cart</a></li>
-                                <li><a href="add-products.html">Add Products</a></li>
+                                <li><a href="/admin/product">Products</a></li>
+                                {{!-- <li><a href="/admin/product_details">Product Details</a></li>
+                                <li><a href="product-cart.html">Product Cart</a></li> --}}
+                                <li><a href="/admin/add_product">Add Products</a></li>
                             </ul>
                         </li>
                         <li>
@@ -85,35 +82,35 @@
                                 <i class="menu-icon icon-flash_on"></i><span>Orders</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="orders.html">Orders</a></li>
-                                <li><a href="order-details.html">Order Details</a></li>
+                                <li><a href="/admin/orders">Orders</a></li>
+                                
                             </ul>
                         </li>
                         <li>
-                            <a href="customers.html"> <i class="menu-icon icon-code"></i><span>Customers</span> </a>
+                            <a href="/admin/user"> <i class="menu-icon icon-code"></i><span>Customers</span> </a>
                         </li>
                         <li>
                             <a href="#">
                                 <i class="menu-icon icon-format_list_bulleted"></i><span>Coupons</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="coupons.html">Coupons</a></li>
-                                <li><a href="create-coupons.html">Create Coupons</a></li>
+                                <li><a href="/admin/coupon">Coupons</a></li>
+                                <li><a href="/admin/create_coupon">Create Coupons</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#">
-                                <i class="menu-icon icon-settings"></i><span>Settings</span><i class="accordion-icon fa fa-angle-left"></i>
+                                <i class="menu-icon icon-settings"></i><span>SAlES</span><i class="accordion-icon fa fa-angle-left"></i>
                             </a>
                             <ul>
-                                <li><a href="staff-members.html">Staff Members</a></li>
-                                <li><a href="add-staff-member.html">Add Staff Members</a></li>
-                                <li><a href="site-settings.html">Site Settings</a></li>
+                                <li><a href="/admin/sales">Sales Report</a></li>
+                                {{!-- <li><a href="add-staff-member.html">Add Staff Members</a></li>
+                                <li><a href="site-settings.html">Site Settings</a></li> --}}
                             </ul>
                         </li>
                         <li class="menu-divider"></li>
                         <li>
-                            <a href="#"> <i class="menu-icon icon-public"></i><span>Logout</span> </a>
+                            <a href="/admin/logout"> <i class="menu-icon icon-public"></i><span>Logout</span> </a>
                         </li>
                     </ul>
                 </div>
@@ -128,7 +125,7 @@
             ================================================== -->
             <div class="page-header">
                 <div class="search-form">
-                    <form action="#" method="GET">
+                    <form action="/admin/category" method="GET">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control search-input" placeholder="Type something...">
                             <span class="input-group-btn">
@@ -143,7 +140,7 @@
                         <div class="navbar-header">
                             <div class="logo-sm">
                                 <a href="#" id="sidebar-toggle-button"><i class="fa fa-bars"></i></a>
-                                <a class="logo-box" href="index.html"><img src="../img/logos/logo.png" class="logo" alt="..."></a>
+                                <a class="logo-box" href="/admin"><img src="/images/logo-01.png" class="logo" alt="..."></a>
                             </div>
                             <button type="button" class="navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                                 <i class="fa fa-angle-down"></i>
@@ -195,14 +192,14 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown user-dropdown">
-                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="img/avatars/user-dropdown.jpg" alt="..." class="rounded-circle"></a>
+                                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="/imgNA/avatars/user-dropdown.jpg" alt="..." class="rounded-circle"></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">Profile</a></li>
                                         <li><a href="#">Calendar</a></li>
                                         <li><a href="#"><span class="badge float-end badge-danger">42</span>Messages</a></li>
                                         <li role="separator" class="divider"></li>
                                         <li><a href="#">Account Settings</a></li>
-                                        <li><a href="#">Log Out</a></li>
+                                        <li><a href="/admin/logout">Log Out</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -217,180 +214,104 @@
             ================================================== -->
             <div class="page-inner">
 
-                <!-- PAGE MAIN WRAPPER
-                ================================================== -->
-                <div id="main-wrapper">
-                    <!-- row -->
-                    <div class="row g-xl-3">
-                        <div class="col-xl-8 grid-margin">
-                            <div class="card card-white">
-                                <div class="card-heading clearfix">
-                                    <h4 class="card-title">Product information</h4>
-                                </div>
-                                <div class="card-body">
+    <!-- PAGE MAIN WRAPPER
+    ================================================== -->
+    <div id="main-wrapper">
+        <!-- row -->
+        <div class="row align-items-center grid-margin">
+            <div class="col-12">
+                <div class="card card-white">
+                    <div class="card-body row align-items-center">
+                        <div class="col-12 col-md-4 mb-4 mb-md-0">
+                            <h4 class="mb-0">BANNER</h4>
+                        </div>
 
-                                    <div class="table-responsive mb-5">
-                                        <table class="table table-centered mb-0 table-nowrap product-cart">
-                                            <thead class="bg-light">
-                                                <tr>
-                                                    <th class="product">Product</th>
-                                                    <th>Product Desc</th>
-                                                    <th>Price</th>
-                                                    <th>Quantity</th>
-                                                    <th colspan="2">Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/cart1.jpg" alt="...">
-                                                    </td>
-                                                    <td>
-                                                        <h6 class="mb-1"><a href="#">Men's Football Boots</a></h6>
-                                                        <p class="mb-0 text-muted">SKU: 290397</p>
-                                                    </td>
-                                                    <td>
-                                                        $15.00
-                                                    </td>
-                                                    <td>
-                                                        <div style="width: 150px;">
-                                                            <input id="demo3" type="text" value="0" name="demo3">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $15.00
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                            <i class="far fa-trash-alt text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/cart2.jpg" alt="...">
-                                                    </td>
-                                                    <td>
-                                                        <h6 class="mb-1"><a href="#">Sun Protection Cap</a></h6>
-                                                        <p class="mb-0 text-muted">SKU: 290398</p>
-                                                    </td>
-                                                    <td>
-                                                        $10.20
-                                                    </td>
-                                                    <td>
-                                                        <div style="width: 150px;">
-                                                            <input id="demo3" type="text" value="0" name="demo3">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $10.20
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                            <i class="far fa-trash-alt text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="img/cart3.jpg" alt="...">
-                                                    </td>
-                                                    <td>
-                                                        <h6 class="mb-1"><a href="#">Heel Character Shoes</a></h6>
-                                                        <p class="mb-0 text-muted">SKU: 290399</p>
-                                                    </td>
-                                                    <td>
-                                                        $19.50
-                                                    </td>
-                                                    <td>
-                                                        <div style="width: 150px;">
-                                                            <input id="demo3" type="text" value="0" name="demo3">
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        $19.50
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                            <i class="far fa-trash-alt text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="mb-5">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Add a Note:</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Write some note..." rows="3"></textarea>
-                                    </div>
-                                    <div class="d-flex justify-content-between">
-                                        <div>
-                                            <a href="#"><i class="fas fa-arrow-left f-s-12 me-1 align-middle"></i> Continue Shopping</a>
-                                        </div>
-                                        <div>
-                                            <a href="#" class="btn btn-primary btn-rounded"><i class="fas fa-cart-plus f-s-12 me-1 align-middle"></i> Checkout</a>
-                                        </div>
-                                    </div>
+                        <!-- <div class="col-12 col-md-8">
+                            <div class="row">
+                                <div class="col-md-3 mb-3 mb-md-0">
+                                    <select class="form-control form-select">
+                                        <option>Status</option>
+                                        <option>Deliveres</option>
+                                        <option>Pending</option>
+                                        <option>Processing</option>
+                                        <option>Failed</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3 mb-3 mb-md-0">
+                                    <select class="form-control form-select">
+                                        <option>Order Limits</option>
+                                        <option>Last 7 Orders</option>
+                                        <option>Last 15 Orders</option>
+                                        <option>Last 30 Orders</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="exampleInputEmail1" placeholder="search by name" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-xl-4 grid-margin">
-                            <div class="card card-white mb-3">
-                                <div class="card-heading clearfix">
-                                    <h4 class="card-title">Order Summary</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Grand Total :</td>
-                                                    <td>$ 264</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Discount : </td>
-                                                    <td>-$ 26</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Shipping Charge :</td>
-                                                    <td>$ 24</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Estimated Tax : </td>
-                                                    <td>$ 18.22</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>Total :</th>
-                                                    <th>$ 280.22</th>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card card-white">
-                                <div class="card-heading clearfix">
-                                    <h4 class="card-title">coupon code</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="alert alert-warning mb-4" role="alert">
-                                        Use coupon code MNTF25 and get 25% discount !
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Coupon code" aria-label="Coupon code" aria-describedby="button-addon2">
-                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div> -->
                     </div>
-                    <!-- end row -->
-                </div>
-
-                <div class="page-footer">
-                    <p>Copyright &copy; <span class="current-year"></span> Smartshop All rights reserved.</p>
                 </div>
             </div>
+        </div>
+        <!-- end row -->
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 grid-margin">
+                <div class="card card-white h-100">
+                    <div class="card-heading clearfix">
+                        <h4 class="card-title">Banners</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <!-- <th>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                                <label class="custom-control-label" for="customCheck1">&nbsp;</label>
+                                            </div>
+                                        </th> -->
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Name</th>
+                                        
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each matchedBanner}}
+                                        <tr>
+                                            <td><img style="width: 25rem; height: 10rem; border-radius: 2rem;"  src="/images/uploads/{{this.image}}" alt="image"></td>
+                                            <td>{{this.title}}</td>
+                                            <td>{{this.titlename}}</td>
+                                           
+                                            <td>
+                                                <a  href="/admin/banner?bannerId={{this._id}}"  data-bs-toggle="tooltip" data-bs-placement="top" title="edit">
+                                                    <i class="far fa-edit text-primary"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                              
+                                    {{/each}}   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end row -->
+    </div>
+
+    <div class="page-footer">
+        <p>Copyright &copy; <span class="current-year"></span> Ekka All rights reserved.</p>
+    </div>
+</div>
 
             <!-- PAGE MAIN RIGHT SIDEBAR
             ================================================== -->
@@ -414,7 +335,7 @@
                                     <span class="chat-title">Recent</span>
                                     <a href="#" class="right-sidebar-toggle chat-item unread" data-sidebar-id="chat-right-sidebar">
                                         <div class="user-avatar">
-                                            <img src="img/avatars/chat01.jpg" alt="...">
+                                            <img src="/imgNA/avatars/chat01.jpg" alt="...">
                                         </div>
                                         <div class="chat-info">
                                             <span class="chat-author">David</span>
@@ -424,7 +345,7 @@
                                     </a>
                                     <a href="#" class="right-sidebar-toggle chat-item unread active-user" data-sidebar-id="chat-right-sidebar">
                                         <div class="user-avatar">
-                                            <img src="img/avatars/chat02.jpg" alt="...">
+                                            <img src="/imgNA/avatars/chat02.jpg" alt="...">
                                         </div>
                                         <div class="chat-info">
                                             <span class="chat-author">Daisy</span>
@@ -437,7 +358,7 @@
                                     <span class="chat-title">Older</span>
                                     <a href="#" class="right-sidebar-toggle chat-item" data-sidebar-id="chat-right-sidebar">
                                         <div class="user-avatar">
-                                            <img src="img/avatars/chat03.jpg" alt="...">
+                                            <img src="/imgNA/avatars/chat03.jpg" alt="...">
                                         </div>
                                         <div class="chat-info">
                                             <span class="chat-author">Tom</span>
@@ -447,7 +368,7 @@
                                     </a>
                                     <a href="#" class="right-sidebar-toggle chat-item active-user" data-sidebar-id="chat-right-sidebar">
                                         <div class="user-avatar">
-                                            <img src="img/avatars/chat04.jpg" alt="...">
+                                            <img src="/imgNA/avatars/chat04.jpg" alt="...">
                                         </div>
                                         <div class="chat-info">
                                             <span class="chat-author">Anna</span>
@@ -457,7 +378,7 @@
                                     </a>
                                     <a href="#" class="right-sidebar-toggle chat-item active-user" data-sidebar-id="chat-right-sidebar">
                                         <div class="user-avatar">
-                                            <img src="img/avatars/chat05.jpg" alt="...">
+                                            <img src="/imgNA/avatars/chat05.jpg" alt="...">
                                         </div>
                                         <div class="chat-info">
                                             <span class="chat-author">Liza</span>
@@ -528,7 +449,7 @@
                                 <div class="chat-start-date">02/03/2019 5:58PM</div>
                                 <div class="chat-bubble them">
                                     <div class="chat-bubble-img-container">
-                                        <img src="img/avatars/chat06.jpg" alt="...">
+                                        <img src="/imgNA/avatars/chat06.jpg" alt="...">
                                     </div>
                                     <div class="chat-bubble-text-container">
                                         <span class="chat-bubble-text">Hello</span>
@@ -547,7 +468,7 @@
                                 </div>
                                 <div class="chat-bubble them">
                                     <div class="chat-bubble-img-container">
-                                        <img src="img/avatars/chat07.jpg" alt="...">
+                                        <img src="/imgNA/avatars/chat07.jpg" alt="...">
                                     </div>
                                     <div class="chat-bubble-text-container">
                                         <span class="chat-bubble-text">ipsum dolor sit amet</span>
@@ -570,9 +491,9 @@
 
     <!-- BUY TEMPLATE
     ================================================== -->
-    <div class="buy-theme alt-font d-none d-lg-inline-block"><a href="https://wrapbootstrap.com/theme/smartshop-multipurpose-ecommerce-template-WB0N7CT4D" target="_blank"><i class="fas fa-cart-plus"></i><span>Buy Template</span></a></div>
+    {{!-- <div class="buy-theme alt-font d-none d-lg-inline-block"><a href="https://wrapbootstrap.com/theme/smartshop-multipurpose-ecommerce-template-WB0N7CT4D" target="_blank"><i class="fas fa-cart-plus"></i><span>Buy Template</span></a></div>
 
-    <div class="all-demo alt-font d-none d-lg-inline-block"><a href="https://www.chitrakootweb.com/contact.html" target="_blank"><i class="far fa-envelope"></i><span>Quick Question?</span></a></div>
+    <div class="all-demo alt-font d-none d-lg-inline-block"><a href="https://www.chitrakootweb.com/contact.html" target="_blank"><i class="far fa-envelope"></i><span>Quick Question?</span></a></div> --}}
     
     <!-- SCROLL TO TOP
     ================================================== -->
@@ -580,37 +501,41 @@
 
     <!-- ALL JS INCLUDE
     ================================================== -->
-
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="/pluginsNA/jquery/jquery.min.js"></script>
 
     <!-- popper -->
-    <script src="plugins/popper/js/popper.min.js"></script>
+    <script src="/pluginsNA/popper/js/popper.min.js"></script>
 
     <!-- bootstrap -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/pluginsNA/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- slimscroll -->
-    <script src="plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/pluginsNA/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- uniform -->
-    <script src="plugins/uniform/js/jquery.uniform.standalone.js"></script>
+    <script src="/pluginsNA/uniform/js/jquery.uniform.standalone.js"></script>
 
     <!-- switchery -->
-    <script src="plugins/switchery/switchery.min.js"></script>
+    <script src="/pluginsNA/switchery/switchery.min.js"></script>
 
-    <!-- tagsinput -->
-    <script src="plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <!-- apex chart -->
+    <script src="/pluginsNA/apexcharts/apexcharts.js"></script>
 
-    <!-- form elements -->
-    <script src="js/pages/form-elements.js"></script>
+    <!-- chart js -->
+    <script src="/jsNA/pages/chart.js"></script>
 
     <!-- theme core scripts -->
-    <script src="js/main.js"></script>
+    <script src="/jsNA/main.js"></script>
+    <script>
+        
+    </script>
 
     <!-- all js include end -->
 </body>
 
 
-<!-- Mirrored from smartshop.websitelayout.net/admin/product-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Jan 2023 16:00:59 GMT -->
+<!-- Mirrored from smartshop.websitelayout.net/admin//admin by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 03 Jan 2023 16:00:28 GMT -->
 </html>

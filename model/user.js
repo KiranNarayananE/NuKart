@@ -16,10 +16,19 @@ const userSchema = new mongoose.Schema({
         required: [true],
         unique: true,
       },
+      image: {
+        type: String,
+       
+        
+      },
     email: {
       type: String,
       required: [true],
       unique: true,
+    },
+    walletBalance: {
+      type: Number,
+      default:0
     },
     password: {
       type: String,
@@ -190,6 +199,10 @@ const userSchema = new mongoose.Schema({
           type: String,
           default: "Confirmed"
       },
+      paymentStatus: {
+        type: String,
+        default: "pending"
+    },
         couponapplied: {
             type: Boolean,
             default: false

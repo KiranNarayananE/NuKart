@@ -178,11 +178,11 @@
                   </li>
 
                   <li>
-                    <a href="">About</a>
+                    <a href="/profile">Account</a>
                   </li>
 
                   <li>
-                    <a href="">Contact</a>
+                    <a href="/contact">Contact</a>
                   </li>
                 </ul>
               </div>
@@ -258,56 +258,59 @@
 
         <!-- Menu Mobile -->
         <div class="menu-mobile">
-          <ul class="topbar-mobile">
-            <li>
-              <div class="left-top-bar">
-                Free shipping for standard order over $100
-              </div>
-            </li>
+			<ul class="topbar-mobile">
+				<li>
+					<div class="left-top-bar">
+						Free shipping for standard order over $100
+					</div>
+				</li>
 
-            <li>
-              <div class="right-top-bar flex-w h-full">
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                  Help & FAQs
-                </a>
+				<li>
+					<div class="right-top-bar flex-w h-full">
+						{{#if msg_login}}
+						<a href="/logout" class="flex-c-m trans-04 p-lr-25">
+							LOGOUT
+						</a>
+						{{else}}
+                         <a href="/login" class="flex-c-m trans-04 p-lr-25">
+							LOGIN
+						</a>
+						{{/if}} 
+						<a href="/profile" class="flex-c-m trans-04 p-lr-25">
+							My Account
+						</a>
 
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                  My Account
-                </a>
+						
+					</div>
+				</li>
+			</ul>
 
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                  EN
-                </a>
+			<ul class="main-menu-m">
+				<li>
+					<a href="/">Home</a>
+					<ul class="sub-menu-m">
+						{{!-- <li><a href="/">Homepage 1</a></li>
+						<li><a href="home-02.html">Homepage 2</a></li>
+						<li><a href="home-03.html">Homepage 3</a></li> --}}
+					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
+				</li>
 
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                  USD
-                </a>
-              </div>
-            </li>
-          </ul>
+				<li>
+					<a href="/shop">Shop</a>
+				</li>
 
-          <ul class="main-menu-m">
-            <li>
-              <a href="index.html">Home</a>
+				<li>
+					<a href="/profile">Account</a>
+				</li>
 
-              <span class="arrow-main-menu-m">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </span>
-            </li>
-
-            <li>
-              <a href="product.html">Shop</a>
-            </li>
-
-            <li>
-              <a href="about.html">About</a>
-            </li>
-
-            <li>
-              <a href="contact.html">Contact</a>
-            </li>
-          </ul>
-        </div>
+				<li>
+					<a href="/contact">Contact</a>
+				</li>
+			</ul>
+		</div>
 
         <!-- Modal Search -->
         <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
@@ -481,8 +484,8 @@
                                         <span class="font-weight-700">Shipped Via:</span> UPS Ground
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-2 mb-md-0">
-                                    <div class="text-center bg-light p-4">
+                                <div class="col-md-4 mb-2 mb-md-0" >
+                                    <div class="text-center bg-light p-4" id="upperStatus">
                                         <span class="font-weight-700">Status:</span> {{orderList.orderStatus}}
                                     </div>
                                 </div>
@@ -499,45 +502,28 @@
                                     <div class="order-tracking-step">
                                         <div class="step">
                                             <i class="fa-solid fa-circle-check text-success"></i>
-                                            <h4 class="mb-0">Confirmed Order</h4>
+                                            <h4 class="mb-0"> Order Confirmed</h4>
                                         </div>
-                                        <div class="step">
-                                               {{#equal orderList.orderStatus "confirmed"}}
-                                            <i class="fa-solid fa-circle-check text-success"></i>
-                                
-                                            {{/equal}}
-                                            {{#equal orderList.orderStatus "processing"}}
-                                            <i class="fa-solid fa-circle-check text-success"></i>
-                                            {{else}}
+                                        <div class="step" id="processing">
+                                              
                                             <i class="fa-solid fa-hourglass-start text-info"></i>
-                                            {{/equal}}
                                             <h4 class="mb-0">Processing Order</h4>
                                         </div>
-                                        {{#equal orderList.orderStatus "cancelled"}}
-                                        <div class="step" id="show" style="display: none;">
-                                          {{#equal orderList.orderStatus "confirmed"}}
-                                            <i class="fa-solid fa-circle-check text-success"></i>
-                                            {{else}}
+                                        <div class="step" id="delivered" >
                                           <i class="fa-solid fa-hourglass-start text-info"></i>
-                                            {{/equal}}
-                                            <h4 class="mb-0">Product Delivered</h4>
+                                            <h4 class="mb-0">Order Delivered</h4>
                                             
                                         </div>
-                                        {{else}}
-                                        <div class="step" id="show" >
-                                          {{#equal orderList.orderStatus "confirmed"}}
-                                            <i class="fa-solid fa-circle-check text-success"></i>
-                                            {{else}}
-                                          <i class="fa-solid fa-hourglass-start text-info"></i>
-                                            {{/equal}}
-                                            <h4 class="mb-0">Product Delivered</h4>
-                                            
-                                        </div>
-                                        {{/equal}}
                                         {{#equal orderList.orderStatus "cancelled"}}
                                         <div class="step">
                                         <i class="fa-solid fa-circle-check text-success"></i>
-                                        <h4 class="mb-0">Product Cancelled</h4>
+                                        <h4 class="mb-0">Order Cancelled</h4>
+                                    </div>
+                                  {{/equal}}
+                                  {{#equal orderList.orderStatus "returned"}}
+                                        <div class="step">
+                                        <i class="fa-solid fa-circle-check text-success"></i>
+                                        <h4 class="mb-0">Order Returned</h4>
                                     </div>
                                   {{/equal}}
                                 </div>
@@ -589,19 +575,21 @@
                                         {{/each}}
                                     </tbody>
                                 </table>
-                            </div>
-                         {{#equal orderList.orderStatus "cancelled"}}
-                            <div class="buttons-set" style="display: none;">
-                                <a href="/" class="butn-style2 wide"><i class="fas fa-arrow-left me-1"></i> Home</a>
+                                
+                            
+                            <div class="buttons-set" id="cancelButton">
+                                
                                 <a href="/order" class="butn-style2 wide" id="cancelOrder">Cancel order</a>
                             </div>
-                            {{else}}
-                            <div class="buttons-set" >
-                                <a href="/" class="butn-style2 wide"><i class="fas fa-arrow-left me-1"></i> Home</a>
-                                <a href="/order" class="butn-style2 wide" id="cancelOrder">Cancel order</a>
+                            <div class="buttons-set" id="returnButton" style="display: none;">
+                                
+                                <a href="/order" class="butn-style2 wide" id="returnOrder">Return order</a>
                             </div>
-                          {{/equal}}
+                         
+
                         </div>
+                            </div>
+                         
 
                     </div>
                     <!-- end left pannel section -->
@@ -830,6 +818,9 @@
           </div>
         </div>
       </footer>
+      <script>
+        
+      </script>
         
     </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
@@ -850,15 +841,40 @@
     document.getElementById('cancelOrder').addEventListener('click',(e)=>{
             e.preventDefault()
             
-       axios.patch('/orders',{orderId:"{{orderList.orderId}}"}).then((response)=>{
+       axios.patch('/orders',{orderId:"{{orderList.orderId}}",action:"cancelled"}).then((response)=>{
         if(response.data.msg){
           Toast.fire({
                             icon: "success",
                             title: "SUCCESS",
                             text: `ORDER CANCELLED`
                         }); 
-       document.getElementById("show").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i><h4 class="mb-0">Product Cancelled</h4>`
-       document.getElementById('cancelOrder').style.display="none"
+      document.getElementById("processing").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                            <h4 class="mb-0"> Order Processed</h4>`
+        document.getElementById("delivered").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                        <h4 class="mb-0">Product Cancelled</h4>`
+       document.getElementById('cancelButton').style.display="none"
+       document.getElementById("upperStatus").innerHTML=`<span class="font-weight-700">Status:</span> cancelled`
+        }
+
+    })   
+    })
+    document.getElementById('returnOrder').addEventListener('click',(e)=>{
+            e.preventDefault()
+            
+            
+       axios.patch('/orders',{orderId:"{{orderList.orderId}}",action:"returned"}).then((response)=>{
+        if(response.data.msg){
+          Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: `ORDER RETURNED`
+                        }); 
+      document.getElementById("processing").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                            <h4 class="mb-0"> Order Processed</h4>`
+        document.getElementById("delivered").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                        <h4 class="mb-0">Product Returned</h4>`
+       document.getElementById('returnButton').style.display="none"
+       document.getElementById("upperStatus").innerHTML=`<span class="font-weight-700">Status:</span> returned`
         }
 
     })   
@@ -870,7 +886,34 @@
     <a href="#" class="scroll-to-top"><i class="fas fa-angle-up" aria-hidden="true"></i></a>
     
     <!-- all js include start -->
+    <script>
+      if("{{orderList.orderStatus}}"=="processing"){
+        document.getElementById("processing").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                            <h4 class="mb-0"> Order Processed</h4>`
+      }
+       if("{{orderList.orderStatus}}"=="delivered"){
+        document.getElementById("delivered").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                            <h4 class="mb-0">Order Delivered </h4>`
+        document.getElementById("processing").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                            <h4 class="mb-0"> Order Processed</h4>`
+        document.getElementById("cancelButton").style.display="none"
+        document.getElementById("returnButton").style.display="block"                                   
+      }
+      if("{{orderList.orderStatus}}"=="cancelled"){
+        document.getElementById("processing").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                            <h4 class="mb-0"> Order Processed</h4>`
+        document.getElementById("delivered").style.display='none'
+        document.getElementById("cancelButton").style.display="none"
 
+      }
+      if("{{orderList.orderStatus}}"=="returned"){
+        document.getElementById("processing").innerHTML=`<i class="fa-solid fa-circle-check text-success"></i>
+                                            <h4 class="mb-0"> Order Processed</h4>`
+        document.getElementById("delivered").style.display='none'
+        document.getElementById("cancelButton").style.display="none"
+      }
+
+    </script>
     <!-- jQuery -->
     <script src="https://kit.fontawesome.com/07fcc2468d.js" crossorigin="anonymous"></script>
     <!-- all js include start -->

@@ -816,7 +816,7 @@
              axios.patch(`/admin/block_user/${userId}`,{
 			}).then(response=>{
                 if(response.data.msg_login){
-        location.href="/admin"
+        location.href="/login"
     }
     else{
                 if(response){

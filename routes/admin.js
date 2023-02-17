@@ -25,6 +25,11 @@ const { login ,
   deleteCoupon,
   orderList,
   orderAction,
+  getBanner,
+  editbannerSubmit,
+  paymentAction,
+  salesReport,
+  salesProject,
   logout
 } = require("../controller/admin");
 
@@ -54,6 +59,11 @@ router.delete("/coupon/:id" ,ifAdminAxios, deleteCoupon)
 router.get("/coupon" ,ifAdmin, viewCoupon)
 router.get("/orders",ifAdmin,orderList)
 router.patch("/orders",ifAdminAxios,orderAction)
+router.put("/orders",ifAdminAxios,paymentAction)
+router.get("/banner",ifAdmin,getBanner)
+router.put("/banner" ,ifAdminAxios,multer.array("myFiles", 4), editbannerSubmit)
+router.get("/sales",ifAdmin,salesReport)
+router.get("/salesProject",ifAdminAxios,salesProject)
 router.get('/logout',logout)
 
 

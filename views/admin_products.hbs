@@ -604,6 +604,17 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
  <script>
+    const Toast = Swal.mixin({
+                toast: true,
+                position: "center-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+            })
     function deleteProduct(productId){
          Swal.fire({
   title: 'Are you sure?',
@@ -617,8 +628,8 @@
   if (result.isConfirmed) {
    axios.delete(`/admin/product/${productId}`,{
 			}).then(response=>{
-                if(response){
-      location.href= "/admin/product"
+                if(response.data.msg_login){
+      location.href= "/admin"
 
       }
       else{
@@ -626,19 +637,19 @@
       
                 if(response.data.msg_delete){
                     document.getElementById(`row${productId}`).style.display ='none'
-                    Swal.fire(
-      'Deleted!',
-      'Product has been deleted.',
-      'success'
-    )
+                    Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: "Product Deleted Successfully"
+                        })
                 
                 }
                 if(response.data.msg_deleteerr){
-                    Swal.fire(
-      'Sorry!',
-      'Product Not deleted.',
-      'error'
-    )
+                    Toast.fire({
+                            icon: "error",
+                            title: "SUCCESS",
+                            text: "Product Not deleted"
+                        })
                      }
                 
       }   

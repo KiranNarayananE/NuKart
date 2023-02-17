@@ -10,11 +10,11 @@
       href="https://fonts.googleapis.com/css?family=Roboto:400,700"
     />
     <!-- https://fonts.google.com/specimen/Open+Sans -->
-    <link rel="stylesheet" href="css/fontawesome.min.css" />
+    <link rel="stylesheet" href="/css/fontawesome.min.css" />
     <!-- https://fontawesome.com/ -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <!-- https://getbootstrap.com/ -->
-    <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="/css/templatemo-style.css">
     <!--
 	Product Admin CSS Template
 	https://templatemo.com/tm-524-product-admin
@@ -37,7 +37,7 @@
           <div class="tm-bg-primary-dark tm-block tm-block-h-auto" style="border-radius:1rem ; background-color: #111340;" >
             <div class="row">
               <div class="col-12 ">
-                <h1 class="tm-block-title mb-4 text-center text-white">Login</h1>
+                <h1  id="heading" class="tm-block-title mb-4 text-center text-white">Login</h1>
                    <div style="height: 50px;">
                     <div
                     class="alert alert-danger text-center"
@@ -70,7 +70,7 @@
                     
                    </script>
             <div class="row mt-2">
-              <div class="col-12">
+              <div class="col-12" id = "signup">
                 <form action="/login" method="post" class="tm-login-form" onsubmit=" return validateform()">
                   <div class="form-group">
                     <label for="email"  class="text-white">Enter Email</label>
@@ -102,10 +102,10 @@
                     </button>
                   </div>
                   <div class="form-group mt-2 d-flex justify-content-center " >
-                  <a href="/password" class="text-danger">Forgot password?</a> 
+                  <a href="/password" id="forgotPassword" class="text-danger">Forgot password?</a> 
                    </div> 
                    <div class="form-group mt-2 d-flex justify-content-center ">
-                  <a href="/verifyphone" >Create New Account?</a> 
+                  <a href="/verifyphone" id="createAccount">Create New Account?</a> 
                    </div>   
                 </form>
               </div > 
@@ -159,6 +159,17 @@ else if(atposition<1||dotposition<atposition+2||dotposition+2>=y.length){
 </script>
  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+  const Toast = Swal.mixin({
+                toast: true,
+                position: "center-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                }
+            })
   if({{msgblock}}){
    document.getElementById('incorrect').innerHTML="User Blocked"
                       document.getElementById('incorrect').style.display ='block';
@@ -177,30 +188,500 @@ else if(atposition<1||dotposition<atposition+2||dotposition+2>=y.length){
                     setTimeout(() => {
                     document.getElementById('incorrect').style.display ='none' ;},3000) 
   }
-  else if({{msg_create}}){
-  const Toast = Swal.mixin({
-                toast: true,
-                position: "center-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener("mouseenter", Swal.stopTimer);
-                    toast.addEventListener("mouseleave", Swal.resumeTimer);
-                }
-            })
-            Toast.fire({
+  
+</script>
+<script>
+
+   function login(){
+    document.getElementById('heading').innerHTML="LOGIN"
+   document.getElementById('signup').innerHTML=`<form action="/login" method="post" class="tm-login-form" onsubmit=" return validateform()">
+                  <div class="form-group">
+                    <label for="email"  class="text-white">Enter Email</label>
+                    <input
+                      name="email"
+                      type="text"
+                      class="form-control validate"
+                      id="email"
+                    
+                    />
+                  </div>
+                  <div class="form-group mt-3">
+                    <label class="text-white" for="password">Password</label>
+                    <input
+                      name="password"
+                      type="password"
+                      class="form-control validate"
+                      id="password"
+                     
+                    />
+                  </div>
+                  <div class="form-group mt-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block text-uppercase mt-2"
+                      style="border-radius:2rem ;"
+                    >
+                      Login
+                    </button>
+                  </div>
+                  <div class="form-group mt-2 d-flex justify-content-center " >
+                  <a href="/password" id="forgotPassword" class="text-danger">Forgot password?</a> 
+                   </div> 
+                   <div class="form-group mt-2 d-flex justify-content-center ">
+                  <a href="/verifyphone" id="createAccount">Create New Account?</a> 
+                   </div>   
+                </form>`
+  }
+  function change(formName){
+       document.getElementById('heading').innerHTML="VERIFY PHONE NUMBER"
+    
+  document.getElementById('signup').innerHTML=`                
+               <form action="/" id=${formName} method="post" class="tm-login-form" >
+                  <div class="form-group">
+                    <label for="email"  class="text-white mb-4">Enter Mobile Number</label>
+                    <input
+                      name="phone"
+                      placeholder="Enter Mobile Number"
+                      id="mobilenumber"
+                      type=""
+                      class="form-control validate"
+                      
+                    
+                    />
+                  </div>
+                
+                  <div class="form-group mt-5 mb-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block text-uppercase mt-2"
+                      style="border-radius:2rem ;"
+                      id="sign-button"
+                    >
+                      Send Otp
+                    </button>
+                  </div>
+                    
+                </form>`
+  }  
+  
+
+  function phoneVerify(phone,password){
+    
+         axios.post('/verifyphone',{phone,password}).then((response)=>{
+      if(response.data.status){
+        let {phone,password}= response.data
+        console.log(phone)
+        Toast.fire({
                             icon: "success",
                             title: "SUCCESS",
-                            text: "Account Created Successfully"
-                        })
+                            text: "OTP Send to your Number"
+                        });
+         document.getElementById('heading').innerHTML="VERIFY OTP"                
+       document.getElementById('signup').innerHTML=`<form action="/" id="format" method="post" class="tm-login-form" ">
+                  <div class="form-group">
+                    <label for="email"  class="text-white mb-4">Enter OTP</label>
+                    <input
+                      type=""
+                      name="otp"
+                     placeholder="Enter OTP"
+                   id="otpinp"
+                      class="form-control validate"
+                      
+                    
+                    />
+                  </div>
+                  
+                  <div class="form-group mt-5 mb-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block text-uppercase mt-2"
+                      style="border-radius:2rem ;"
+                      id="sign-button2"
+                    >
+                     VERIFY OTP
+                    </button>
+                  </div>
+                    
+                </form>
+            <div id="time">    
+          <div id="timerId">
+                        <p class="my-2 text-primary" style="font-size:13px;text-align:center"> Resend OTP in
+                            <span id="countdowntimer">60</span> Seconds
+                        </p>
+                    </div>
+          </div>          
+        `                 
+         timer(phone,password)
+      }
+      else{
+       document.getElementById('incorrect').innerHTML=response.data.msg
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+      }
+        } )
+
+          }  
+  function timer(phone,password){
+  console.log(phone)
+     var timeleft = 60;
+            var downloadTimer = setInterval(function () {
+                timeleft--;
+                document.getElementById("countdowntimer").textContent = timeleft;
+                if (timeleft <= 0) {
+                    clearInterval(downloadTimer);
+                    document.getElementById('time').innerHTML = `<div class="form-group mt-2 d-flex justify-content-center" id="resendIdButton" 
+                    onclick="phoneVerify('${phone}','${password}')"  >
+                  <span  class="text-danger">Resend OTP?</span> 
+                   </div>`
+                }
+
+            }, 1000);
+    document.getElementById("format").addEventListener("submit" ,e=>{
+    e.preventDefault()
+    if (timeleft > 0) {  
+    const otp = document.getElementById("otpinp").value;
+    if (otp.length==0) {
+    document.getElementById('incorrect').innerHTML="Enter OTP "
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000); 
+       
+    }
+        else if (otp.length!=6) {
+      document.getElementById('incorrect').innerHTML="Enter Valid OTP"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000); 
+    }
+    else{
+      axios.post('/otpverify',{otp,password}).then((response)=>{
+        let{password}=response.data
+      if(response.data.status){
+        changeSignup(password)
+     
+      }
+      else{
+       document.getElementById('incorrect').innerHTML=response.data.msg
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+      }
+      })
+    }
+    }
+    else{
+     Toast.fire({
+                            icon: "error",
+                            title: "OTP Timed Out",
+                            text: "Please Resend OTP"
+                        }) 
+    }
+        })         
+            
+    }   
+
+  function changeSignup(password){
+    if(!password){
+     document.getElementById('heading').innerHTML="SIGNUP"
+     document.getElementById('signup').innerHTML=`<form action="/" method="post" class="tm-login-form" id="format3">
+                   <div class="form-group">
+                    <label for="name"  class="text-white">Enter Name</label>
+                    <input
+                      name="name"
+                      type="text"
+                      class="form-control validate"
+                      id="name"
+                    
+                    />
+
+                  <div class="form-group">
+                    <label for="email"  class="text-white">Enter Email</label>
+                    <input
+                      name="email"
+                      type="text"
+                      class="form-control validate"
+                      id="email"
+                    
+                    />
+                  </div>
+                  <div class="form-group mt-3">
+                    <label class="text-white" for="password">Password</label>
+                    <input
+                      name="password"
+                      type="password"
+                      class="form-control validate"
+                      id="password"
+                     
+                    />
+                  </div>
+                  <div class="form-group mt-3">
+                    <label class="text-white" for="password">Password</label>
+                    <input
+                      name="confirm_password"
+                      type="password"
+                      class="form-control validate"
+                      id="confirm_password"
+                     
+                    />
+                  </div>
+                  <div class="form-group mt-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block text-uppercase mt-2"
+                      style="border-radius:2rem ;"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                  <div class="form-group mt-2 d-flex justify-content-center " >
+                  <a href="/password" id="forgotPassword" class="text-danger">Forgot password?</a> 
+                   </div> 
+                   <div class="form-group mt-2 d-flex justify-content-center ">
+                  <a href="/verifyphone" id="createAccount">Create New Account?</a> 
+                   </div>`
+
+            document.getElementById("format3").addEventListener("submit" ,e=>{
+    e.preventDefault()
+    let formData= new FormData(e.target)
+            let data =  Object.fromEntries(formData)
+    let {email,password,confirm_password,name}= data
+      let atposition=email.indexOf("@");
+      let dotposition=email.lastIndexOf(".")
+      if(name.length<3||name==null){
+      document.getElementById('incorrect').innerHTML="Enter Valid Name"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+
+      }
+      else if(atposition<1||dotposition<atposition+2||dotposition+2>=email.length)
+  {
+document.getElementById('incorrect').innerHTML="Enter Valid Email Address"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+  }
+  else if(password =="" || confirm_password==""){
+  document.getElementById('incorrect').innerHTML="enter both Password feild"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+ 
+ }
+
+  else if(password.length !=0 && confirm_password.length!=password.length||password!=confirm_password){
+    document.getElementById('incorrect').innerHTML="enter same passwords"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
    
   }
+  else{
+   axios.post('/signup',data).then((response)=>{
+      if(response.data.status){
+        Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: "Signup Successfull"
+                        })
+        login()
+      }
+      else{
+        Toast.fire({
+                            icon: "error",
+                            text: response.data.msg
+                        })
+      }
+   })
+
+  }
+        })
+
+    }
+    else{
+     document.getElementById('heading').innerHTML="CHANGE PASSWORD"
+     document.getElementById('signup').innerHTML=`<form action="/" method="post" class="tm-login-form" id="format2">
+                  <div class="form-group">
+                    <label for="email"  class="text-white">Enter Email</label>
+                    <input
+                      name="email"
+                      type="text"
+                      class="form-control validate"
+                      id="email"
+                    
+                    />
+                  </div>
+                  <div class="form-group mt-3">
+                    <label class="text-white" for="password">Password</label>
+                    <input
+                      name="password"
+                      type="password"
+                      class="form-control validate"
+                      id="password"
+                     
+                    />
+                  </div>
+                  <div class="form-group mt-3">
+                    <label class="text-white" for="password">Password</label>
+                    <input
+                      name="confirm_password"
+                      type="password"
+                      class="form-control validate"
+                      id="confirm_password"
+                     
+                    />
+                  </div>
+                  <div class="form-group mt-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block text-uppercase mt-2"
+                      style="border-radius:2rem ;"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                  <div class="form-group mt-2 d-flex justify-content-center " >
+                  <a href="/password" id="forgotPassword" class="text-danger">Forgot password?</a> 
+                   </div> 
+                   <div class="form-group mt-2 d-flex justify-content-center ">
+                  <a href="/verifyphone" id="createAccount">Create New Account?</a> 
+                   </div>`
+
+            document.getElementById("format2").addEventListener("submit" ,e=>{
+    e.preventDefault()
+    let formData= new FormData(e.target)
+            let data =  Object.fromEntries(formData)
+    let {email,password,confirm_password}= data
+      let atposition=email.indexOf("@");
+      let dotposition=email.lastIndexOf(".")
+       if(atposition<1||dotposition<atposition+2||dotposition+2>=email.length)
+  {
+document.getElementById('incorrect').innerHTML="Enter Valid Email Address"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+  }
+  else if(password =="" || confirm_password==""){
+  document.getElementById('incorrect').innerHTML="enter both Password feild"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+ 
+ }
+
+  else if(password.length !=0 && confirm_password.length!=password.length||password!=confirm_password){
+    document.getElementById('incorrect').innerHTML="enter Same Password "
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
+   
+  }
+  else{
+   axios.patch('/password',data).then((response)=>{
+      if(response.data.status){
+        Toast.fire({
+                            icon: "success",
+                            title: "SUCCESS",
+                            text: "Password Reset Successfully"
+                        })
+        login()
+      }
+      else{
+        Toast.fire({
+                            icon: "error",
+                            text: response.data.msg
+                        })
+      }
+   })
+
+  }
+        })
+    }      
+    }
+
+  
+
+
+document.getElementById("createAccount").addEventListener("click",e=>{
+  e.preventDefault()
+   change("form")
+
+      
+     
+   document.getElementById("form").addEventListener("submit" ,e=>{
+    e.preventDefault()
+   let phone = document.getElementById("mobilenumber").value
+ 
+    if( phone === "" || phone === null ){
+          document.getElementById('incorrect').innerHTML="Enter Mobile Number"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);  
+    }
+    else if(phone.length!=10){
+document.getElementById('incorrect').innerHTML="Enter Valid Mobile Number"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);  
+      
+
+    }
+    else{
+      phoneVerify(phone)
+    }
+ 
+ 
+  })
+   
+             
+
+})
+
+
+</script>
+<script>
+
+  document.getElementById("forgotPassword").addEventListener("click",e=>{
+  e.preventDefault()
+   change("form2")
+
+      
+     
+   document.getElementById("form2").addEventListener("submit" ,e=>{
+    e.preventDefault()
+   let phone = document.getElementById("mobilenumber").value
+ 
+    if( phone === "" || phone === null ){
+          document.getElementById('incorrect').innerHTML="Enter Mobile Number"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);  
+    }
+    else if(phone.length!=10){
+document.getElementById('incorrect').innerHTML="Enter Valid Mobile Number"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);  
+      
+
+    }
+    else{
+      phoneVerify(phone,"true")
+    }
+ 
+ 
+  })
+   
+             
+
+})
 </script>
     </div>
-    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
   </body>
 </html>

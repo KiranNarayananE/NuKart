@@ -156,13 +156,7 @@
                   My Account
                 </a>
 
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
-                  EN
-                </a>
-
-                <a href="#" class="flex-c-m trans-04 p-lr-25">
-                  USD
-                </a>
+               
               </div>
             </div>
           </div>
@@ -172,7 +166,7 @@
 
               <!-- Logo desktop -->
               <a href="#" class="logo">
-                <img src="images/logo-01.png" alt="..." />
+                <img src="/images/logo-01.png" alt="..." />
               </a>
 
               <!-- Menu desktop -->
@@ -188,11 +182,11 @@
                   </li>
 
                   <li>
-                    <a href="about.html">About</a>
+                    <a href="/profile">Account</a>
                   </li>
 
                   <li>
-                    <a href="contact.html">Contact</a>
+                    <a href="/contact">Contact</a>
                   </li>
                 </ul>
               </div>
@@ -236,15 +230,11 @@
 
           <!-- Icon header -->
           <div class="wrap-icon-header flex-w flex-r-m m-r-15">
-            <div
-              class="icon-header-item cl0 hov-cl1 trans-04 p-r-11 js-show-modal-search"
-            >
-              <i class="zmdi zmdi-search"></i>
-            </div>
+            
 
             <div
               class="icon-header-item cl0 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart"
-              data-notify="2"
+              data-notify="{{cartCount}}"
             >
               <i class="zmdi zmdi-shopping-cart"></i>
             </div>
@@ -252,7 +242,7 @@
             <a
               href="#"
               class="dis-block icon-header-item cl0 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-              data-notify="0"
+              data-notify="{{wishlistCount}}"
             >
               <i class="zmdi zmdi-favorite-outline"></i>
             </a>
@@ -268,56 +258,59 @@
 
         <!-- Menu Mobile -->
         <div class="menu-mobile">
-          <ul class="topbar-mobile">
-            <li>
-              <div class="left-top-bar">
-                Free shipping for standard order over $100
-              </div>
-            </li>
+			<ul class="topbar-mobile">
+				<li>
+					<div class="left-top-bar">
+						Free shipping for standard order over $100
+					</div>
+				</li>
 
-            <li>
-              <div class="right-top-bar flex-w h-full">
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                  Help & FAQs
-                </a>
+				<li>
+					<div class="right-top-bar flex-w h-full">
+						{{#if msg_login}}
+						<a href="/logout" class="flex-c-m trans-04 p-lr-25">
+							LOGOUT
+						</a>
+						{{else}}
+                         <a href="/login" class="flex-c-m trans-04 p-lr-25">
+							LOGIN
+						</a>
+						{{/if}} 
+						<a href="/profile" class="flex-c-m trans-04 p-lr-25">
+							My Account
+						</a>
 
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                  My Account
-                </a>
+						
+					</div>
+				</li>
+			</ul>
 
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                  EN
-                </a>
+			<ul class="main-menu-m">
+				<li>
+					<a href="/">Home</a>
+					<ul class="sub-menu-m">
+						{{!-- <li><a href="/">Homepage 1</a></li>
+						<li><a href="home-02.html">Homepage 2</a></li>
+						<li><a href="home-03.html">Homepage 3</a></li> --}}
+					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
+				</li>
 
-                <a href="#" class="flex-c-m p-lr-10 trans-04">
-                  USD
-                </a>
-              </div>
-            </li>
-          </ul>
+				<li>
+					<a href="/shop">Shop</a>
+				</li>
 
-          <ul class="main-menu-m">
-            <li>
-              <a href="/">Home</a>
+				<li>
+					<a href="/profile">Account</a>
+				</li>
 
-              <span class="arrow-main-menu-m">
-                <i class="fa fa-angle-right" aria-hidden="true"></i>
-              </span>
-            </li>
-
-            <li>
-              <a href="product.html">Shop</a>
-            </li>
-
-            <li>
-              <a href="about.html">About</a>
-            </li>
-
-            <li>
-              <a href="contact.html">Contact</a>
-            </li>
-          </ul>
-        </div>
+				<li>
+					<a href="/contact">Contact</a>
+				</li>
+			</ul>
+		</div>
 
         <!-- Modal Search -->
         <div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
@@ -350,11 +343,25 @@
        
         <!-- ACCOUNT ADDRESS
         ================================================== -->
-        <section  style="background-color: #c2c2c2"class="md">
+        <section class="page-title-section bg-img cover-background" style="padding-top: 25px; padding-bottom: 0px;" data-background="/imgNA/bg/page-title.jpg">
+            <div class="container">
+                    <div class="breadcrumbs-info">
+                    <ul class="ps-0">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/address">MY ADDRESS</a></li>
+                    </ul>
+                </div>
+                <div class="title-info" style="text-align: center;padding-top: 35px;">
+                    <h1>MY ADDRESS</h1></div>
+                
+
+            </div>
+        </section>
+        <section  style="background-color: #c2c2c2;padding-top: 25px;"class="md" >
             <div class="container">
 
                 <div class="title-info">
-                    <h1>Contact / Shipping Address</h1></div>
+                   
                 <div class="breadcrumbs-info">
                     <ul class="ps-0">
                         {{!-- <li><a href="home-shop-1.html">Home</a></li>
@@ -369,7 +376,7 @@
                     <!-- left panel -->
                     <div class="col-lg-4 col-sm-9 mb-2-3 mb-lg-0">
 
-                        <div class="account-pannel">
+                        <div class="account-pannel" style="min-height: 563px;">
 
                             <div class="p-4">
 
@@ -380,17 +387,16 @@
                                     <h6 class="mb-0 display-28">{{user_list.name}}</h6>
                                     {{!-- <small>Joined February 06, 2017</small> --}}
                                     <div class="reward-points">
-                                        <i class="ti-star text-primary pe-1"></i> Points: 7386
+                                        <i class="ti-star text-primary pe-1"></i> WalletBalance: {{walletBalance}}
                                     </div>
                                 </div>
                             </div>
 
                             <div class="list-group">
-                                <a class="list-group-items" href="/orders"><i class="ti-bag pe-2"></i>Orders<span class="badge badge-pill">6</span></a>
+                                <a class="list-group-items" href="/orders"><i class="ti-bag pe-2"></i>Orders<span class="badge badge-pill"></span></a>
                                 <a class="list-group-items" href="/profile"><i class="ti-user pe-2"></i>Profile</a>
-                                <a class="list-group-items active" style="background-color: #717fe0;" href="account-address.html"><i class="ti-location-pin pe-2" ></i>Addresses</a>
-                                <a class="list-group-items" href="account-wishlist.html"><i class="ti-heart pe-2"></i>Wishlist<span class="badge badge-pill">3</span></a>
-                                <a class="list-group-items" href="account-tickets.html"><i class="ti-tag pe-2"></i>My Tickets<span class="badge badge-pill">4</span></a>
+                                <a class="list-group-items active" style="background-color: #717fe0;" href="/address"><i class="ti-location-pin pe-2" ></i>Addresses</a>
+                               
                             </div>
 
                         </div>

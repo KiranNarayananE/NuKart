@@ -1,29 +1,87 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Slide Navbar</title>
-  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/userlogin.css">
-</head>
-<body>
-    <div class="main">    
-    <input type="checkbox" id="chk" aria-hidden="true">
-      <div id = "signup">
-       <form action="/verifyphone" method="post" id="form" >
-          <label for="chk" aria-hidden="true"  >Verify Mobile Number</label>
-          <input
-            type=""
-            name="phone"
-            placeholder="Enter Mobile Number"
-            id="mobilenumber"
-            style="margin: 0px auto;"
-          />
-          <div style="min-height:30px ;"><p class="danger" id="valid"  style="display: none; margin: 0px 0px 0px 65px ;color: red;"></p></div>
-          <button id="sign-button" type="submit" style="margin: 0px auto 0px auto;">Send OTP</button>
-          
-        </form>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login Page - Product Admin Template</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+    />
+    <!-- https://fonts.google.com/specimen/Open+Sans -->
+    <link rel="stylesheet" href="css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="css/templatemo-style.css">
+    <!--
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+	-->
+  </head>
+
+  <body>
+    <div>
+      <nav class="navbar navbar-expand-xl">
+        <div class="container h-100">
+          <div class="logo-mobile">
+				    <a href="#"><img src="/images/logo-01.png" style="height: 50px;" alt="IMG-LOGO" ></a>
+			 </div>
+      </nav>
+    </div>
+
+    <div class="container tm-mt-big tm-mb-big">
+      <div class="row">
+        <div class="col-12 mx-auto tm-login-col">
+          <div class="tm-bg-primary-dark tm-block tm-block-h-auto" style="border-radius:1rem ; background-color: #111340;" >
+            <div class="row">
+              <div class="col-12 ">
+                <h1 class="tm-block-title mb-4 text-center text-white">SIGNUP</h1>
+                   <div style="height: 50px;">
+                    <div
+                    class="alert alert-danger text-center"
+                    role="alert"
+                    id="incorrect"
+                    style="display: none;position: relative;width: auto;"
+                   >
+                  </div>
+                  </div>
+                 
+            <div class="row mt-2">
+              <div class="col-12" id = "signup">
+                <form action="/" id="form" method="post" class="tm-login-form" >
+                  <div class="form-group">
+                    <label for="email"  class="text-white mb-4">Enter Mobile Number</label>
+                    <input
+                      name="phone"
+                      placeholder="Enter Mobile Number"
+                      id="mobilenumber"
+                      type=""
+                      class="form-control validate"
+                      
+                    
+                    />
+                  </div>
+                
+                  <div class="form-group mt-5 mb-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block text-uppercase mt-2"
+                      style="border-radius:2rem ;"
+                      id="sign-button"
+                    >
+                      Send Otp
+                    </button>
+                  </div>
+                    
+                </form>
+              </div > 
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
+      
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <script>
     const Toast = Swal.mixin({
@@ -39,30 +97,47 @@
             })
           function phoneVerify(phone){
          axios.post('/verifyphone',{phone}).then((response)=>{
-      if(response.data){
-        let {phone}= response.data.status
+      if(response.data.status){
+        let {phone}= response.data
+        console.log(phone)
         Toast.fire({
                             icon: "success",
                             title: "SUCCESS",
                             text: "OTP Send to your Number"
                         });
-       document.getElementById('signup').innerHTML=`<form action="/" method="post" id="format" >
-          <label for="chk" aria-hidden="true"  >Verify OTP </label>
-          <input
-            type=""
-            name="otp"
-            placeholder="Enter OTP"
-            id="otpinp"
-            style="margin: 0px auto;"
-          />
-          <div style="min-height:30px ;"><p class="danger" id="valid"  style="display: none; margin: 0px 0px 0px 65px ;color: red;"></p></div>
-          <button id="sign-button" type="submit" style="margin: 0px auto 0px auto;">Send OTP</button>
-          </form>
+       document.getElementById('signup').innerHTML=`<form action="/" id="format" method="post" class="tm-login-form" ">
+                  <div class="form-group">
+                    <label for="email"  class="text-white mb-4">Enter OTP</label>
+                    <input
+                      type=""
+                      name="otp"
+                     placeholder="Enter OTP"
+                   id="otpinp"
+                      class="form-control validate"
+                      
+                    
+                    />
+                  </div>
+                  
+                  <div class="form-group mt-5 mb-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block text-uppercase mt-2"
+                      style="border-radius:2rem ;"
+                      id="sign-button2"
+                    >
+                      Send Otp
+                    </button>
+                  </div>
+                    
+                </form>
+            <div id="time">    
           <div id="timerId">
                         <p class="my-2 text-primary" style="font-size:13px;text-align:center"> Resend OTP in
                             <span id="countdowntimer">60</span> Seconds
                         </p>
                     </div>
+          </div>          
         `                 
          timer(phone)
       }
@@ -81,16 +156,16 @@
    let phone = document.getElementById("mobilenumber").value
  
     if( phone === "" || phone === null ){
-          Toast.fire({
-                            icon: "error",
-                            text: "Enter mobile number"
-                        })
+          document.getElementById('incorrect').innerHTML="Enter Mobile Number"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);  
     }
     else if(phone.length!=10){
-Toast.fire({
-                            icon: "error",
-                            text: "Enter valid number"
-                        })
+document.getElementById('incorrect').innerHTML="Enter Valid Mobile Number"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);  
       
 
     }
@@ -102,14 +177,17 @@ Toast.fire({
   })
    
 function timer(phone){
+  console.log(phone)
      var timeleft = 60;
             var downloadTimer = setInterval(function () {
                 timeleft--;
                 document.getElementById("countdowntimer").textContent = timeleft;
                 if (timeleft <= 0) {
                     clearInterval(downloadTimer);
-                    document.getElementById('timerId').innerHTML = `<button  id="resendIdButton" onclick="phoneVerify(${phone})" class="btn btn-outline-white">
-                        <span class="font-weight-bold text-danger cursor">Resend</span></button>`
+                    document.getElementById('time').innerHTML = `<div class="form-group mt-2 d-flex justify-content-center" id="resendIdButton" 
+                    onclick="phoneVerify(${phone})"  >
+                  <span  class="text-danger">Resend OTP?</span> 
+                   </div>`
                 }
 
             }, 1000);
@@ -118,17 +196,17 @@ function timer(phone){
     if (timeleft > 0) {  
     const otp = document.getElementById("otpinp").value;
     if (otp.length==0) {
-     Toast.fire({
-                            icon: "error",
-                            text: "Enter OTP"
-                        })
+    document.getElementById('incorrect').innerHTML="Enter OTP "
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000); 
        
     }
         else if (otp.length!=6) {
-      Toast.fire({
-                            icon: "error",
-                            text: "Enter valid OTP"
-                        })
+      document.getElementById('incorrect').innerHTML="Enter Valid OTP"
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000); 
     }
     else{
       axios.post('/otpverify',{otp}).then((response)=>{
@@ -136,10 +214,10 @@ function timer(phone){
         location.href="/signup"
       }
       else{
-       Toast.fire({
-                            icon: "error",
-                            text: response.data.msg
-                        })
+       document.getElementById('incorrect').innerHTML=response.data.msg
+                      document.getElementById('incorrect').style.display ='block';
+                    setTimeout(() => {
+                    document.getElementById('incorrect').style.display ='none' ;},3000);
       }
       })
     }
@@ -165,6 +243,11 @@ function timer(phone){
             
         </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
-  
-</body>
+
+    </div>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+  </body>
 </html>

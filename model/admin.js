@@ -33,6 +33,10 @@ const productSchema = new mongoose.Schema({
     type:  Number,
     required: [true],
   },
+  status:{
+    type:Boolean,
+    default:true
+  },
   color: {
     type: String,
     required: [true],
@@ -129,8 +133,32 @@ const couponSchema = new mongoose.Schema(
 
 const coupon = mongoose.model('coupon', couponSchema);
 
+const bannerSchema = new mongoose.Schema({
+  title:{
+    type: String,
+    required: [true],
+    
+  },
+  titlename: {
+    type: String,
+    required: [true],
+  },
+  link: {
+    type: String,
+    required: [true],
+  },
+  image: {
+    type: String,
+    required: [true],
+  }
+},{
+    versionKey:false
+});
+const banner = mongoose.model('banner', bannerSchema)
+
 module.exports = {
     category,
     product,
-    coupon
+    coupon,
+    banner
   };
